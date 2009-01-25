@@ -17,7 +17,7 @@ First download JRuby and unpack it to some location, for example $HOME/jruby. Ma
  
 ... or by creating a symlink from your bin directory:
 
-ln -s $HOME/jruby/bin/jruby /usr/bin/jruby
+ ln -s $HOME/jruby/bin/jruby /usr/bin/jruby
 
 Next install the celerity gem for JRuby:
 
@@ -75,11 +75,11 @@ h2. Links to Celerity documentation
 
 h2. Links
 
-[cucumber]http://github.com/aslakhellesoy/cucumber/wikis
-[celerity]http://celerity.rubyforge.org
-[jruby]http://jruby.codehaus.org
-[rspec]http://rspec.info
-[htmlunit]http://htmlunit.sourceforge.net/
+* "cucumber":http://github.com/aslakhellesoy/cucumber/wikis
+* "celerity":http://celerity.rubyforge.org
+* "jruby":http://jruby.codehaus.org
+* "rspec":http://rspec.info
+* "htmlunit":http://htmlunit.sourceforge.net/
 
 h2. Contact
 
