@@ -22,7 +22,7 @@ ln -s $HOME/jruby/bin/jruby /usr/bin/jruby
 Now (assuming you already have a Rails application set up already) install Culerity as a Rails Plugin:
 
  cd RAILS_ROOT
- git clone 
+ git clone git://github.com/langalex/culerity.git
 
 or as a gem:
 
