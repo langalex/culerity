@@ -19,12 +19,16 @@ First download JRuby and unpack it to some location, for example $HOME/jruby. Ma
 
 ln -s $HOME/jruby/bin/jruby /usr/bin/jruby
 
-Now (assuming you already have a Rails application set up already) install Culerity as a Rails Plugin:
+Next install the celerity gem for JRuby:
+
+ jruby -S gem install celerity
+
+Now (assuming you have a Rails application set up already) install Culerity as a Rails Plugin:
 
  cd RAILS_ROOT
  git clone git://github.com/langalex/culerity.git
 
-or as a gem:
+or as a gem: (definitely preferred)
 
  gem install langalex-culerity
 
