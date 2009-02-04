@@ -22,7 +22,7 @@ module Culerity
       if res.first == :return
         res[1]
       elsif res.first == :exception
-        raise "#{res[1]}: #{res[2]}"
+        raise res[1], res[2], res[3]
       end
     end
     
