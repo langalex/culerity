@@ -69,8 +69,8 @@ I get _Connection Refused_ errors
 h2. Links to Celerity documentation
 
 * "How to select elements":http://celerity.rubyforge.org/yard/Celerity/Container.html
-* "FAQ":http://celerity.rubyforge.org/wiki/wiki.pl
-* "Tutorial":http://celerity.rubyforge.org/wiki/wiki.pl?GettingStarted
+* "FAQ":http://wiki.github.com/jarib/celerity/faq
+* "Tutorial":http://wiki.github.com/jarib/celerity/getting-started
 * "API docs":http://celerity.rubyforge.org/yard/
 
 h2. Links
