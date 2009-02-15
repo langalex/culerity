@@ -50,6 +50,13 @@ describe Culerity::CelerityServer do
     Culerity::CelerityServer.new(_in, _out)
   end
   
+  it "should configure the browser" do
+    _in = stub 'in'
+    _in.stub!(:gets).and_return('["celerity", "configure_browser", {:browser=>:firefox}]' + "\n", '["browser", "goto", "/homepage"]' + "\n", "[\"_exit_\"]\n")
+    Celerity::Browser.should_receive(:new).with(:browser => :firefox)
+    Culerity::CelerityServer.new(_in, stub_everything)
+  end
+  
   it "should pass multiple method calls" do
     @browser.should_receive(:goto).with('/homepage')
     @browser.should_receive(:goto).with('/page2')

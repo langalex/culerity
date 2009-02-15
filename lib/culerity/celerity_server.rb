@@ -6,8 +6,8 @@ module Culerity
   class CelerityServer
     
     def initialize(_in, _out)
-      @browser = Celerity::Browser.new
       @proxies = {}
+      @browser_options = {}
       
       while(true)
         call = eval _in.gets.to_s.strip
@@ -26,9 +26,19 @@ module Culerity
     
     private
     
+    def configure_browser(options)
+      @browser_options = options
+    end
+    
+    def browser
+      @browser ||= Celerity::Browser.new @browser_options || {}
+    end
+    
     def target(object_id)
       if object_id == 'browser'
-        @browser
+        browser
+      elsif object_id == 'celerity'
+        self
       else
         @proxies[object_id]
       end
