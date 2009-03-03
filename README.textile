@@ -35,7 +35,7 @@ or as a gem: (definitely preferred)
 And add the culerity gem to your environment.rb:
 
  config.gem 'langalex-culerity', :lib => 'culerity', :version => '0.1', :source => 'http://gems.github.com'
-
+ 
 Run the RSpec, Cucumber and Culerity generators:
 
  cd RAILS_ROOT
@@ -64,6 +64,9 @@ I get a broken pipe error:
 
 I get _Connection Refused_ errors
 * make sure you have started a server in the test environment that runs on port 80
+
+My application can't find the data I create in my steps
+* make sure you have disabled transactional fixtures in your env.rb
 
 
 h2. Links to Celerity documentation
