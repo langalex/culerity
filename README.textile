@@ -31,10 +31,6 @@ Now (assuming you have a Rails application set up already) install Culerity as a
 or as a gem: (definitely preferred)
 
  gem install langalex-culerity
-
-And add the culerity gem to your environment.rb:
-
- config.gem 'langalex-culerity', :lib => 'culerity', :version => '0.1', :source => 'http://gems.github.com'
  
 Run the RSpec, Cucumber and Culerity generators:
 
