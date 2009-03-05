@@ -17,7 +17,7 @@ module Culerity
             result = target(call.first).send call[1], *call[2..-1]
             _out << "[:return, #{proxify result}]\n"
           rescue => e
-            _out << "[:exception, \"#{e.class}\", #{e.message.inspect}]\n"
+            _out << "[:exception, #{e.class.inspect}, #{e.message.inspect}, #{e.backtrace.inspect}]\n"
           end
         end
       end
