@@ -2,12 +2,12 @@ require 'culerity'
 
 Before do
   $server ||= Culerity::run_server
-  $browser ||= Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}
+  $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}
+  $browser.close
   @host = 'http://localhost'
 end
 
 at_exit do
-  $browser.close
   $browser.exit
   $server.close
 end
