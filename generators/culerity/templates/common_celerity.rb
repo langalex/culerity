@@ -1,8 +1,8 @@
 require 'culerity'
 
 Before do
-  $server = Culerity::run_server
-  $browser = Culerity::RemoteBrowserProxy.new @server, {:browser => :firefox}
+  $server ||= Culerity::run_server
+  $browser ||= Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}
   @host = 'http://localhost'
 end
 
