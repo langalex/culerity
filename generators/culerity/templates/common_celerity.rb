@@ -38,9 +38,8 @@ When /I choose "(.*)"/ do |field|
   $browser.radio(:id, find_label(field).for).set(true)
 end
 
-When /I go to "(.*)"/ do |path|
-  $browser.goto @host + path
-  assert_successful_response
+When /I go to (.+)/ do |path|
+  $browser.goto @host + path_to(path)
 end
 
 When "I wait for the AJAX call to finish" do
