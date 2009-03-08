@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{culerity}
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang"]
-  s.date = %q{2009-03-06}
+  s.date = %q{2009-03-08}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{alex@upstream-berlin.com}
   s.files = ["README.textile", "VERSION.yml", "generators/culerity", "generators/culerity/culerity_generator.rb", "generators/culerity/templates", "generators/culerity/templates/common_celerity.rb", "lib/culerity", "lib/culerity/celerity_server.rb", "lib/culerity/remote_browser_proxy.rb", "lib/culerity/remote_object_proxy.rb", "lib/culerity.rb", "spec/celerity_server_spec.rb", "spec/remote_browser_proxy_spec.rb", "spec/remote_object_proxy_spec.rb", "spec/spec_helper.rb"]
