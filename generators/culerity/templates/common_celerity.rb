@@ -3,8 +3,7 @@ require 'culerity'
 Before do
   $server ||= Culerity::run_server
   $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}
-  $browser.close
-  @host = 'http://localhost'
+  @host = 'http://localhost:3001'
 end
 
 at_exit do
@@ -34,25 +33,37 @@ When /^I uncheck "(.*)"$/ do |field|
   $browser.check_box(:id, find_label(field).for).set(false)
 end
 
+When /I select "(.*)" from "(.*)"/ do |value, field|
+  $browser.select_list(:id, find_label(field).for).select value
+end
+
 When /I choose "(.*)"/ do |field|
   $browser.radio(:id, find_label(field).for).set(true)
 end
 
 When /I go to (.+)/ do |path|
   $browser.goto @host + path_to(path)
+  assert_successful_response
 end
 
-When "I wait for the AJAX call to finish" do
-  $browser.page.getEnclosingWindow().getThreadManager().joinAll(10000)
+When /I wait for the AJAX call to finish/ do
+  $browser.wait
 end
-
 
 Then /I should see "(.*)"/ do |text|
-  $browser.html.should  =~ /#{text}/m
+  # if we simply check for the browser.html content we don't find content that has been added dynamically, e.g. after an ajax call
+  div = $browser.div(:text, /#{text}/)
+  begin
+    div.html
+  rescue
+    #puts $browser.html
+    raise("div with '#{text}' not found")
+  end
 end
 
 Then /I should not see "(.*)"/ do |text|
-  $browser.html.should_not  =~ /#{text}/m
+  div = $browser.div(:text, /#{text}/).html rescue nil
+  div.should be_nil
 end
 
 def find_label(text)
@@ -65,7 +76,12 @@ def assert_successful_response
     location = $browser.page.web_response.get_response_header_value('Location')
     puts "Being redirected to #{location}"
     $browser.goto location
+    assert_successful_response
   elsif status != 200
+    tmp = Tempfile.new 'culerity_results'
+    tmp << $browser.html
+    tmp.close
+    `open -a /Applications/Safari.app #{tmp.path}`
     raise "Brower returned Response Code #{$browser.page.web_response.status_code}"
   end
 end

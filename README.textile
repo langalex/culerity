@@ -43,10 +43,10 @@ This creates the features folder and a file common_celerity.rb into your applica
 
 After you have written a first feature you can run it just like you would run a standard cucumber feature. The only difference is that you have to start a web server (e.g. mongrel) with the test environment enabled beforehand.
 
-NOTE: For now this server has to run on port 80 because of some problem with redirects losing the port information.
+NOTE: The default port for this server is 3001. You can change this in features/step_definitions/common_celerity.rb
 
  
- sudo script/server -p 80 -e test
+ script/server -p 3001 -e test
  cucumber features/my_feature.feature
 
 h2. How does it work
@@ -59,7 +59,7 @@ I get a broken pipe error:
 * make sure JRuby is installed and in your path: running _jruby -v_ should not produce an error
 
 I get _Connection Refused_ errors
-* make sure you have started a server in the test environment that runs on port 80
+* make sure you have started a server in the test environment that runs on port 3001
 
 My application can't find the data I create in my steps
 * make sure you have disabled transactional fixtures in your env.rb
