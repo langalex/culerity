@@ -67,11 +67,11 @@ describe Culerity::CelerityServer do
   end
   
   it "should return an exception" do
-    @browser.stub!(:goto).and_raise(RuntimeError.new('test exception'))
+    @browser.stub!(:goto).and_raise(RuntimeError.new('test exception with "quotes"'))
     _in = stub 'in'
     _in.stub!(:gets).and_return("[\"browser\", \"goto\", \"/homepage\"]\n", "[\"_exit_\"]\n")
     _out = stub 'out'
-    _out.should_receive(:<<).with(/^\[:exception, RuntimeError, \"test exception\", \[.*\]\]\n$/)
+    _out.should_receive(:<<).with(/^\[:exception, \"RuntimeError\", \"test exception with \\\"quotes\\\"\", \[.*\]\]\n$/)
     Culerity::CelerityServer.new(_in, _out)
   end
 end

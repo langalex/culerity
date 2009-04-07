@@ -1,4 +1,11 @@
 module Culerity
+  
+  class CulerityException < StandardError
+    def initialize(message, backtrace)
+      super message
+      #self.backtrace = backtrace
+    end
+  end
 
   class RemoteObjectProxy
     def initialize(remote_object_id, io)
@@ -22,7 +29,7 @@ module Culerity
       if res.first == :return
         res[1]
       elsif res.first == :exception
-        raise res[1], res[2], res[3]
+        raise CulerityException.new("#{res[1]}: #{res[2]}", res[3])
       end
     end
     

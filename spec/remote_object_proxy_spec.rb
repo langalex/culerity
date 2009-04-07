@@ -15,11 +15,11 @@ describe Culerity::RemoteObjectProxy do
   end
   
   it "should raise the received exception" do
-    io = stub 'io', :gets => "[:exception, RuntimeError, \"test exception\", []]", :<< => nil
+    io = stub 'io', :gets => "[:exception, \"RuntimeError\", \"test exception\", []]", :<< => nil
     proxy = Culerity::RemoteObjectProxy.new 345, io
     lambda {
       proxy.goto '/home'
-    }.should raise_error(RuntimeError, 'test exception')
+    }.should raise_error(Culerity::CulerityException)
   end
   
   it "should send exit" do
