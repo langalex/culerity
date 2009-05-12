@@ -13,31 +13,33 @@ The following guide is written for a Rails application (tested with 2.2.2) but C
 
 First download JRuby and unpack it to some location, for example $HOME/jruby. Make sure that the jruby executable is in your path. You can do this by either setting your PATH accordingly...
 
- export PATH=$HOME/jruby/bin:$PATH
+<code><pre> export PATH=$HOME/jruby/bin:$PATH</pre></code>
  
 ... or by creating a symlink from your bin directory:
 
- ln -s $HOME/jruby/bin/jruby /usr/bin/jruby
+<code><pre> ln -s $HOME/jruby/bin/jruby /usr/bin/jruby</pre></code>
 
 Next install the celerity gem for JRuby:
 
- jruby -S gem install celerity
+<code><pre> jruby -S gem install celerity</pre></code>
 
 Now (assuming you have a Rails application set up already) install Culerity as a Rails Plugin:
 
- cd RAILS_ROOT
- git clone git://github.com/langalex/culerity.git
+<code><pre> cd RAILS_ROOT
+ git clone git://github.com/langalex/culerity.git</pre></code>
 
 or as a gem: (definitely preferred)
 
- gem install langalex-culerity
+<code><pre> gem install langalex-culerity --source http://gems.github.com</pre></code>
  
 Run the RSpec, Cucumber and Culerity generators:
 
+<code><pre>
  cd RAILS_ROOT
  script/generate rspec
  script/generate cucumber
  script/generate culerity
+</pre></code>
  
 This creates the features folder and a file common_celerity.rb into your application. This file contains step definitions for basic interactions like clicking links or filling out forms.
 
@@ -46,8 +48,9 @@ After you have written a first feature you can run it just like you would run a 
 NOTE: The default port for this server is 3001. You can change this in features/step_definitions/common_celerity.rb
 
  
- script/server -p 3001 -e test
+<pre><code> script/server -p 3001 -e test
  cucumber features/my_feature.feature
+</pre></code>
 
 h2. How does it work
 
