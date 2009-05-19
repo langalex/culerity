@@ -67,6 +67,16 @@ I get _Connection Refused_ errors
 My application can't find the data I create in my steps
 * make sure you have disabled transactional fixtures in your env.rb
 
+My database is not cleared automatically between scenarios
+* Rails can't clean the database because you had to disable transactional fixtures - which only work if your test process is the same as your web server process. Hence you have to clean your database manually. A quick way would be:
+
+<pre><code>Before do
+  [User, .... all your models].each do |model|
+    mode.delete_all
+  end
+end
+</code></pre>
+
 I want to test emails but the ActionMailer::Base.deliveries array is always empty.
 * that's because the :test delivery method stores all emails in memory, but now that your test process is not the same as your rails process you don't have access to that array. install the http://github.com/ngty/action_mailer_cache_delivery plugin to access the emails in your rails process via a temporary file
 
