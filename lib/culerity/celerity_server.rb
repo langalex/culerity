@@ -45,7 +45,7 @@ module Culerity
     end
     
     def proxify(result)
-      if [String, TrueClass, FalseClass, Fixnum, Float, NilClass].include?(result.class)
+      if [String, TrueClass, FalseClass, Fixnum, Float, NilClass, Array].include?(result.class)
         result.inspect
       else
         @proxies[result.object_id] = result
