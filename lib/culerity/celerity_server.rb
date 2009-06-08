@@ -46,7 +46,7 @@ module Culerity
     
     def proxify(result)
       if result.is_a?(Array)
-        result.map {|x| proxify(x) }
+        result.map {|x| proxify(x) }.inspect
       elsif [String, TrueClass, FalseClass, Fixnum, Float, NilClass].include?(result.class)
         result.inspect
       else
