@@ -14,6 +14,10 @@ module Culerity
     end
     
     def method_missing(name, *args)
+      send_remote(name, *args)
+    end
+    
+    def send_remote(name, *args)
       @io << "[#{remote_object_id}, \"#{name}\", #{args.map{|a| a.inspect}.join(', ')}]\n"
       process_result @io.gets.to_s.strip
     end
