@@ -20,4 +20,32 @@ describe Culerity::RemoteBrowserProxy do
     proxy = Culerity::RemoteBrowserProxy.new io, {:browser => :firefox}
   end
   
+  it "should timeout if wait_until takes too long" do
+    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
+    proxy = Culerity::RemoteBrowserProxy.new io
+    lambda {
+      proxy.wait_until(1) { false }
+    }.should raise_error(Timeout::Error)
+  end
+  
+  it "should return successfully when wait_until returns true" do
+    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
+    proxy = Culerity::RemoteBrowserProxy.new io
+    proxy.wait_until(1) { true }.should == true
+  end
+  
+  it "should timeout if wait_while takes too long" do
+    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
+    proxy = Culerity::RemoteBrowserProxy.new io
+    lambda {
+      proxy.wait_while(1) { true }
+    }.should raise_error(Timeout::Error)
+  end
+  
+  it "should return successfully when wait_while returns !true" do
+    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
+    proxy = Culerity::RemoteBrowserProxy.new io
+    proxy.wait_while(1) { false }.should == true
+  end
+  
 end
