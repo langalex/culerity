@@ -13,6 +13,12 @@ module Culerity
       @io = io
     end
     
+    # Commonly used to get the HTML id attribute
+    # Use `object_id` to get the local objects' id.
+    def id
+      send_remote(:id)
+    end
+    
     def method_missing(name, *args)
       send_remote(name, *args)
     end
