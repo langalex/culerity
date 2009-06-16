@@ -44,4 +44,16 @@ describe Culerity::RemoteBrowserProxy do
     proxy.wait_while(0.1) { false }.should == true
   end
 
+  it "should accept all javascript confirmation dialogs" do
+    proxy = Culerity::RemoteBrowserProxy.new nil
+
+    proxy.should_receive(:send_remote).with(:add_listener, :confirm).and_return(true)
+    proxy.should_receive(:send_remote).with(:goto, "http://example.com").and_return(true)
+    proxy.should_receive(:send_remote).with(:remove_listener, :confirm).and_return(true)
+
+    proxy.confirm(true) do
+      proxy.goto "http://example.com"
+    end
+  end
+
 end

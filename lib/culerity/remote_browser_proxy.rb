@@ -42,6 +42,19 @@ module Culerity
       true
     end
     
+    
+    #
+    # Specify whether to accept or reject all confirm js dialogs
+    # for the code in the block that's run.
+    # 
+    def confirm(bool, &block)
+      blk = "lambda { #{bool} }"
+      
+      self.send_remote(:add_listener, :confirm) { blk }
+      block.call
+      self.send_remote(:remove_listener, :confirm) { blk }
+    end
+    
     private
     
     def remote_object_id
