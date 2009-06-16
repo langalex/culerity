@@ -1,11 +1,43 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe Culerity::RemoteObjectProxy do
+  describe "block_to_string method" do
+    it "should return block result when result is lambda string" do
+      proxy = Culerity::RemoteObjectProxy.new nil, nil
+      block = lambda { "lambda { true}" }
+      proxy.send(:block_to_string, &block).should == "lambda { true}"
+    end
+    
+    it "should return lambda string when block result isn't a lambda string" do
+      proxy = Culerity::RemoteObjectProxy.new nil, nil
+      [true, false, "blah", 5].each do |var|
+        block = lambda { var }
+        proxy.send(:block_to_string, &block).should == "lambda { #{var} }"
+      end
+    end
+  end
+  
   it "should send the serialized method call to the output" do
     io = stub 'io', :gets => '[:return]'
     io.should_receive(:<<).with(%Q{[345, "goto", "/homepage"]\n})
     proxy = Culerity::RemoteObjectProxy.new 345, io
     proxy.goto '/homepage'
+  end
+  
+  it "should send the serialized method call with argument plus block to the output" do
+    io = stub 'io', :gets => "[:return]"
+    io.should_receive(:<<).with(%Q{[345, "method", true, lambda { true }]\n})
+    proxy = Culerity::RemoteObjectProxy.new 345, io
+    
+    proxy.send_remote(:method, true) { "lambda { true }" }
+  end
+  
+  it "should send the serialized method call without argument plus block to the output" do
+    io = stub 'io', :gets => "[:return]"
+    io.should_receive(:<<).with(%Q{[345, "method", lambda { true }]\n})
+    proxy = Culerity::RemoteObjectProxy.new 345, io
+    
+    proxy.send_remote(:method) { "lambda { true }" }
   end
   
   it "should return the deserialized return value" do
