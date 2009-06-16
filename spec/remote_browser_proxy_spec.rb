@@ -21,31 +21,27 @@ describe Culerity::RemoteBrowserProxy do
   end
   
   it "should timeout if wait_until takes too long" do
-    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
-    proxy = Culerity::RemoteBrowserProxy.new io
+    proxy = Culerity::RemoteBrowserProxy.new nil
     lambda {
-      proxy.wait_until(1) { false }
+      proxy.wait_until(0.1) { false }
     }.should raise_error(Timeout::Error)
   end
   
   it "should return successfully when wait_until returns true" do
-    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
-    proxy = Culerity::RemoteBrowserProxy.new io
-    proxy.wait_until(1) { true }.should == true
+    proxy = Culerity::RemoteBrowserProxy.new nil
+    proxy.wait_until(0.1) { true }.should == true
   end
   
   it "should timeout if wait_while takes too long" do
-    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
-    proxy = Culerity::RemoteBrowserProxy.new io
+    proxy = Culerity::RemoteBrowserProxy.new nil
     lambda {
-      proxy.wait_while(1) { true }
+      proxy.wait_while(0.1) { true }
     }.should raise_error(Timeout::Error)
   end
   
   it "should return successfully when wait_while returns !true" do
-    io = stub 'io', :gets => "[:return, :okay]", :<< => nil
-    proxy = Culerity::RemoteBrowserProxy.new io
-    proxy.wait_while(1) { false }.should == true
+    proxy = Culerity::RemoteBrowserProxy.new nil
+    proxy.wait_while(0.1) { false }.should == true
   end
-  
+
 end
