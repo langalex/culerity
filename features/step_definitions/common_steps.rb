@@ -6,7 +6,7 @@ Given /^env variable \$([\w_]+) set to "(.*)"/ do |env_var, value|
   ENV[env_var] = value
 end
 
-Given /"(.*)" folder is deleted/ do |folder|
+Given /I delete (folder|file) "([^\"]*)"/ do |type, folder|
   in_project_folder { FileUtils.rm_rf folder }
 end
 
@@ -102,6 +102,12 @@ Then /help options "(.*)" and "(.*)" are displayed/ do |opt1, opt2|
   actual_output.should match(/#{opt1}/)
   actual_output.should match(/#{opt2}/)
 end
+
+Then /^I should see "([^\"]*)"$/ do |text|
+  actual_output = File.read(@stdout)
+  actual_output.should contain(text)
+end
+
 
 Then /^I should see$/ do |text|
   actual_output = File.read(@stdout)

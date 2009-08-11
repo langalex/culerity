@@ -12,3 +12,12 @@ Before do
   FileUtils.mkdir_p @home_path
   ENV['HOME'] = @home_path
 end
+
+require 'rubigen'
+require 'rubigen/helpers/generator_test_helper'
+include RubiGen::GeneratorTestHelper
+require 'rails_generator'
+
+SOURCES = Dir[File.dirname(__FILE__) + "/../../generators"].map do |f|
+  RubiGen::PathSource.new(:test, File.expand_path(f))
+end
