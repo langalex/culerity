@@ -12,3 +12,9 @@ Given /^I copy the project generators into "([^\"]*)"$/ do |target_folder|
   `cp -rf #{File.dirname(__FILE__) + "/../../generators/*"} #{File.join(@active_project_folder, target_folder)}`
 end
 
+When /^I add a feature file to test Rails' index.html default file$/ do
+  sample_feature = File.expand_path(File.dirname(__FILE__) + "/../fixtures/sample_feature")
+  in_project_folder do
+    `cp -rf #{sample_feature} features/sample.feature`
+  end
+end

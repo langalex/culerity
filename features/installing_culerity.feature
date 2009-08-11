@@ -10,10 +10,12 @@ Feature: Installing culerity
     And I copy the project generators into "vendor/generators"
     And I invoke task "rake db:migrate"
     When I run executable "script/generate" with arguments "culerity"
-    And I invoke task "rake cucumber:all"
     Then file "features/step_definitions/common_celerity_steps.rb" is created
+    When I invoke task "rake cucumber:all"
     Then I should see "0 scenarios"
-    Then I should see "0 steps"
-  
-  
-  
+    And I should see "0 steps"
+    
+    When I add a feature file to test Rails' index.html default file
+    When I invoke task "rake cucumber:all"
+    Then I should see "1 scenarios"
+    And I should see "4 steps"
