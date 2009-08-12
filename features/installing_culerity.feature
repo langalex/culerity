@@ -20,7 +20,7 @@ Feature: Installing culerity
     
     Given I run the rails server in environment "culerity_development"
     
-    When I add a feature file to test Rails' index.html default file
+    When I add a feature file to test Rails index.html default file
     And I run executable "cucumber" with arguments "features/"
     Then I should see "1 scenario"
-    And I should see "5 steps"
+    And I should see "5 steps (5 passed)"
