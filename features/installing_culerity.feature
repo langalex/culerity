@@ -11,6 +11,8 @@ Feature: Installing culerity
     And I invoke task "rake db:migrate"
     When I run executable "script/generate" with arguments "culerity"
     Then file "features/step_definitions/common_celerity_steps.rb" is created
+    Then file "config/environments/culerity_development.rb" is created
+    Then file "config/environments/culerity_continuousintegration.rb" is created
     When I invoke task "rake cucumber:all"
     Then I should see "0 scenarios"
     And I should see "0 steps"
