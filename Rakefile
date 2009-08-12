@@ -1,7 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-require 'rcov/rcovtask'
+# require 'rcov/rcovtask'
 
 begin
   require 'jeweler'
@@ -33,10 +33,10 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-Rcov::RcovTask.new do |t|
-  t.libs << 'spec'
-  t.test_files = FileList['spec/**/*_spec.rb']
-  t.verbose = true
-end
+# Rcov::RcovTask.new do |t|
+#   t.libs << 'spec'
+#   t.test_files = FileList['spec/**/*_spec.rb']
+#   t.verbose = true
+# end
 
 task :default => :test
