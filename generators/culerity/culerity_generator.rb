@@ -11,6 +11,8 @@ class CulerityGenerator < Rails::Generator::Base
 
       m.gsub_file 'config/database.yml', /\z/, "\nculerity_development:\n  <<: *CUCUMBER"
       m.gsub_file 'config/database.yml', /\z/, "\nculerity_continuousintegration:\n  <<: *CUCUMBER"
+      
+      m.file "lib/tasks/culerity.rake", "lib/tasks/culerity.rake"
     end
   end
 

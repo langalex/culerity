@@ -28,8 +28,7 @@ end
 
 After do
   in_project_folder do
-    pid = File.read("tmp/culerity_rails_server.pid").to_i
-    Process.kill(6, $rails_server.pid) if $rails_server
+    Given 'I invoke task "rake culerity:rails:stop"'
   end
 end
 

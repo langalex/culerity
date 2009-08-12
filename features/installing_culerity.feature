@@ -18,7 +18,8 @@ Feature: Installing culerity
     Then I should see "0 scenarios"
     And I should see "0 steps"
     
-    Given I run the rails server in environment "culerity_development"
+    # Given I run the rails server in environment "culerity_development"
+    Given I invoke task "rake culerity:rails:start"
     
     When I add a feature file to test Rails index.html default file
     And I run executable "cucumber" with arguments "features/"
