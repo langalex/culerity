@@ -18,10 +18,23 @@ Feature: Installing culerity
     Then I should see "0 scenarios"
     And I should see "0 steps"
     
-    # Given I run the rails server in environment "culerity_development"
     Given I invoke task "rake culerity:rails:start"
     
     When I add a feature file to test Rails index.html default file
     And I run executable "cucumber" with arguments "features/"
     Then I should see "1 scenario"
     And I should see "5 steps (5 passed)"
+
+  Scenario: Install culerity and test the rails start + stop tasks
+    Given a Rails app
+    And I run executable "script/generate" with arguments "cucumber"
+    And I delete file "features/step_definitions/webrat_steps.rb"
+    And I copy the project generators into "vendor/generators"
+    And I invoke task "rake db:migrate"
+    When I run executable "script/generate" with arguments "culerity"
+    And I invoke task "rake culerity:rails:start"
+    Then file "tmp/culerity_rails_server.pid" is created
+    And I invoke task "rake culerity:rails:stop"
+    Then file "tmp/culerity_rails_server.pid" is not created
+  
+  

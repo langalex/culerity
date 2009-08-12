@@ -18,7 +18,7 @@ namespace 'culerity' do
       if File.exists?(pid_file)
         pid = File.read(pid_file).to_i
         Process.kill(6, pid)
-        pid.delete
+        File.delete(pid_file)
       else
         puts "No culerity rails server running. Doing nothing."
       end
