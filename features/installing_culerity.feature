@@ -13,11 +13,14 @@ Feature: Installing culerity
     Then file "features/step_definitions/common_celerity_steps.rb" is created
     Then file "config/environments/culerity_development.rb" is created
     Then file "config/environments/culerity_continuousintegration.rb" is created
-    When I invoke task "rake cucumber:all"
+    
+    And I run executable "cucumber" with arguments "features/"
     Then I should see "0 scenarios"
     And I should see "0 steps"
     
+    Given I run the rails server in environment "culerity_development"
+    
     When I add a feature file to test Rails' index.html default file
-    When I invoke task "rake cucumber:all"
-    Then I should see "1 scenarios"
-    And I should see "4 steps"
+    And I run executable "cucumber" with arguments "features/"
+    Then I should see "1 scenario"
+    And I should see "5 steps"

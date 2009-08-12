@@ -18,3 +18,9 @@ When /^I add a feature file to test Rails' index.html default file$/ do
     `cp -rf #{sample_feature} features/sample.feature`
   end
 end
+
+Given /^I run the rails server in environment "([^\"]*)"$/ do |environment|
+  in_project_folder do
+    IO.popen("script/server -e #{environment} -p 3001")
+  end
+end
