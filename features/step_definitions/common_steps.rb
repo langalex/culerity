@@ -49,10 +49,12 @@ When /^I run local executable "(.*)" with arguments "(.*)"/ do |executable, argu
 end
 
 When /^I invoke task "rake (.*)"/ do |task|
-  @stdout = File.expand_path(File.join(@tmp_root, "tests.out"))
+  @stdout = File.expand_path(File.join(@tmp_root, "rake.out"))
+  @stderr = File.expand_path(File.join(@tmp_root, "rake.err"))
   in_project_folder do
-    system "rake #{task} --trace > #{@stdout} 2> #{@stdout}"
+    system "rake #{task} --trace > #{@stdout} 2> #{@stderr}"
   end
+  File.read(@stderr).should_not =~ /rake aborted!/
 end
 
 Then /^folder "(.*)" (is|is not) created/ do |folder, is|
