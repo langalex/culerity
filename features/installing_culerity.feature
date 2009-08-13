@@ -3,7 +3,7 @@ Feature: Installing culerity
   As a self-respective Rails/JavaScript developer
   I want to install culerity into my Rails app
 
-  Scenario: Install culerity into a Rails app and check it works
+  Background:
     Given a Rails app
     And I run executable "script/generate" with arguments "cucumber"
     And I delete file "features/step_definitions/webrat_steps.rb"
@@ -11,6 +11,9 @@ Feature: Installing culerity
     And I invoke task "rake db:migrate"
     When I run executable "script/generate" with arguments "culerity"
     And I setup load path to local code
+  
+
+  Scenario: Install culerity into a Rails app and check it works
     Then file "features/step_definitions/common_celerity_steps.rb" is created
     Then file "config/environments/culerity_development.rb" is created
     Then file "config/environments/culerity_continuousintegration.rb" is created
@@ -27,15 +30,22 @@ Feature: Installing culerity
     And I should see "5 steps (5 passed)"
 
   Scenario: Install culerity and test the rails start + stop tasks
-    Given a Rails app
-    And I run executable "script/generate" with arguments "cucumber"
-    And I delete file "features/step_definitions/webrat_steps.rb"
-    And I copy the project generators into "vendor/generators"
-    And I invoke task "rake db:migrate"
-    When I run executable "script/generate" with arguments "culerity"
-    And I invoke task "rake culerity:rails:start"
+    When I invoke task "rake culerity:rails:start"
     Then file "tmp/culerity_rails_server.pid" is created
     And I invoke task "rake culerity:rails:stop"
     Then file "tmp/culerity_rails_server.pid" is not created
+  
+  Scenario: Install culerity and setup jruby environment
+    Given I have jruby installed
+    When I invoke task "rake culerity:install"
+    Then the gem "celerity" is installed into jruby environment
+  
+  Scenario: Install culerity and report error if jruby is missing
+    Given I do not have jruby installed
+    When I invoke task "rake culerity:install"
+    Then I should see "ERROR: cannot find jruby in your path. Please install jruby 1.3+ from http://jruby.codehaus.org"
+  
+  
+  
   
   

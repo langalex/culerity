@@ -24,4 +24,15 @@ namespace 'culerity' do
       end
     end
   end
+  
+  desc "Install required gems into jruby"
+  task :install => :environment do
+    jruby_cmd = `which jruby`
+    if jruby_cmd.blank?
+      ruby_cmd = `which ruby`
+      jruby_cmd = ruby_cmd if `ruby -v` =~ /jruby/
+    end
+    raise "..." if jruby_cmd.blank?
+    sh "#{jruby_cmd} -S gem install celerity"
+  end
 end
