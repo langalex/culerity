@@ -35,6 +35,6 @@ if __FILE__ == $0
   # pipe_out = open("tmp/culerity_out.pipe", "w+")
   # 
   require File.dirname(__FILE__) + '/culerity/celerity_server'
-  Culerity::CelerityServer.new pipe_in, pipe_out
+  Culerity::CelerityServer.new STDIN, STDOUT
 end
 

@@ -7,8 +7,8 @@ Before do
 end
 
 at_exit do
-  $browser.exit
-  $server.close
+  $browser.exit if $browser
+  $server.close if $server
 end
 
 When /I press "(.*)"/ do |button|

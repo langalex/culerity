@@ -12,11 +12,14 @@ module CommonHelpers
     FileUtils.chdir(@home_path, &block)
   end
 
-  def force_local_lib_override(project_name = @project_name)
-    rakefile = File.read(File.join(project_name, 'Rakefile'))
-    File.open(File.join(project_name, 'Rakefile'), "w+") do |f|
-      f << "$:.unshift('#{@lib_path}')\n"
-      f << rakefile
+  def force_local_lib_override(options = {})
+    target_path = options[:target_path] || options[:target_file] || options[:target] || 'Rakefile'
+    in_project_folder do
+      contents = File.read(target_path)
+      File.open(target_path, "w+") do |f|
+        f << "$:.unshift('#{@lib_path}')\n"
+        f << contents
+      end
     end
   end
 

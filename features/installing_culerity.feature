@@ -10,6 +10,7 @@ Feature: Installing culerity
     And I copy the project generators into "vendor/generators"
     And I invoke task "rake db:migrate"
     When I run executable "script/generate" with arguments "culerity"
+    And I setup load path to local code
     Then file "features/step_definitions/common_celerity_steps.rb" is created
     Then file "config/environments/culerity_development.rb" is created
     Then file "config/environments/culerity_continuousintegration.rb" is created
