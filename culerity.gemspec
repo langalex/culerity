@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{culerity}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang"]
-  s.date = %q{2009-08-12}
+  s.date = %q{2009-08-15}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{alex@upstream-berlin.com}
   s.extra_rdoc_files = [
@@ -25,21 +25,22 @@ Gem::Specification.new do |s|
      "features/fixtures/sample_feature",
      "features/installing_culerity.feature",
      "features/step_definitions/common_steps.rb",
+     "features/step_definitions/culerity_setup_steps.rb",
      "features/step_definitions/rails_setup_steps.rb",
      "features/support/common.rb",
      "features/support/env.rb",
      "features/support/matchers.rb",
-     "generators/culerity/culerity_generator.rb",
-     "generators/culerity/templates/config/environments/culerity_continuousintegration.rb",
-     "generators/culerity/templates/config/environments/culerity_development.rb",
-     "generators/culerity/templates/features/step_definitions/common_celerity_steps.rb",
-     "generators/culerity/templates/lib/tasks/culerity.rake",
      "init.rb",
      "lib/culerity.rb",
      "lib/culerity/celerity_server.rb",
      "lib/culerity/remote_browser_proxy.rb",
      "lib/culerity/remote_object_proxy.rb",
      "rails/init.rb",
+     "rails_generators/culerity/culerity_generator.rb",
+     "rails_generators/culerity/templates/config/environments/culerity_continuousintegration.rb",
+     "rails_generators/culerity/templates/config/environments/culerity_development.rb",
+     "rails_generators/culerity/templates/features/step_definitions/common_celerity_steps.rb",
+     "rails_generators/culerity/templates/lib/tasks/culerity.rake",
      "script/console",
      "script/destroy",
      "script/generate",
