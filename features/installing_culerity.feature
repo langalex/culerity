@@ -18,11 +18,6 @@ Feature: Installing culerity
     When I invoke task "rake culerity:install"
     Then the gem "jarib-celerity" is installed into jruby environment
 
-  Scenario: Install culerity and report error if jruby is missing
-    Given I do not have jruby installed
-    When I invoke task "rake culerity:install"
-    Then I should see "ERROR: cannot find jruby in your path. Please install jruby 1.3+ from http://jruby.codehaus.org"
-
   Scenario: Install culerity and test the rails start + stop tasks
     When I invoke task "rake culerity:rails:start"
     Then file "tmp/culerity_rails_server.pid" is created
