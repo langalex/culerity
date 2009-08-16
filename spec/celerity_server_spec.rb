@@ -51,6 +51,7 @@ describe Culerity::CelerityServer do
   end
   
   it "should configure the browser" do
+    @browser.stub!(:goto).and_return(true)
     _in = stub 'in'
     _in.stub!(:gets).and_return('["celerity", "configure_browser", {:browser=>:firefox}]' + "\n", '["browser", "goto", "/homepage"]' + "\n", "[\"_exit_\"]\n")
     Celerity::Browser.should_receive(:new).with(:browser => :firefox)
