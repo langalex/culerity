@@ -8,10 +8,11 @@ module Culerity
     def initialize(_in, _out)
       @proxies = {}
       @browsers = []
-      
+
       while(true)
         call = eval _in.gets.to_s.strip
         return if call == ["_exit_"]
+        next(close_browsers) if call == ["_close_browsers_"]
         unless call.nil?
           begin
             # check if last arg is a block
@@ -27,6 +28,7 @@ module Culerity
             _out << "[:exception, \"#{e.class.name}\", #{e.message.inspect}, #{e.backtrace.inspect}]\n"
           end
         end
+
       end
       
     end
@@ -41,6 +43,11 @@ module Culerity
       number ||= @browsers.size
       @browsers[number] = Celerity::Browser.new(options || @browser_options || {})
       "browser#{number}"
+    end
+
+    def close_browsers
+      @browsers.each { |browser| browser.close }
+      @browsers = []
     end
 
     def browser(number)

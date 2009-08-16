@@ -3,8 +3,19 @@ require File.dirname(__FILE__) + '/culerity/remote_browser_proxy'
 
 module Culerity
 
+  module ServerCommands
+    def exit_server
+      self << '["_exit_"]'
+      close
+    end
+
+    def close_browsers
+      self.puts '["_close_browsers_"]'
+    end
+  end
+
   def self.run_server
-    IO.popen("jruby #{__FILE__}", 'r+')
+    IO.popen("jruby #{__FILE__}", 'r+').extend(ServerCommands)
 
     # open the two pipes that were created below
     # while(!File.exists?("tmp/culerity_in.pipe")) 
