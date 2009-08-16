@@ -19,10 +19,6 @@ First download JRuby and unpack it to some location, for example $HOME/jruby. Ma
 
 <pre><code> ln -s $HOME/jruby/bin/jruby /usr/bin/jruby</code></pre>
 
-Next install the celerity gem for JRuby:
-
-<pre><code> jruby -S gem install celerity</code></pre>
-
 Now (assuming you have a Rails application set up already) install Culerity as a Rails Plugin:
 
 <pre><code> cd RAILS_ROOT
@@ -40,17 +36,26 @@ Run the RSpec, Cucumber and Culerity generators:
  script/generate cucumber
  script/generate culerity
 </code></pre>
- 
+
 This creates the features folder and a file common_celerity.rb into your application. This file contains step definitions for basic interactions like clicking links or filling out forms.
 
+Culerity is a Ruby-side interface to celerity running on JRuby. To install it:
+
+<pre><code> rake culerity:install</code></pre>
+ 
 After you have written a first feature you can run it just like you would run a standard cucumber feature. The only difference is that you have to start a web server (e.g. mongrel) with the test environment enabled beforehand.
+
+<pre><code> rake culerity:rails:start
+ cucumber features/my_feature.feature
+</code></pre>
+
+The Rails instance uses a special environment culerity_development.
+
+When you have finished running culerity/cucumber you can turn off the Rails instance:
 
 NOTE: The default port for this server is 3001. You can change this in features/step_definitions/common_celerity.rb
 
- 
-<pre><code> script/server -p 3001 -e test
- cucumber features/my_feature.feature
-</code></pre>
+<pre><code> rake culerity:rails:stop</code></pre>
 
 h2. How does it work
 
