@@ -3,11 +3,8 @@ module Culerity
   class RemoteBrowserProxy < RemoteObjectProxy
     def initialize(io, browser_options = {})
       @io = io
-      unless browser_options.empty?
-        @remote_object_id = 'celerity'
-        configure_browser browser_options 
-        @remote_object_id = nil
-      end
+      @remote_object_id = "celerity".inspect
+      @remote_object_id = new_browser(browser_options).inspect
     end
     
     # 
@@ -55,11 +52,7 @@ module Culerity
       self.send_remote(:remove_listener, :confirm) { blk }
     end
     
-    private
-    
-    def remote_object_id
-      (@remote_object_id || 'browser').inspect
-    end
   end
+  
   
 end

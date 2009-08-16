@@ -7,7 +7,7 @@ module Culerity
     
     def initialize(_in, _out)
       @proxies = {}
-      @browser_options = {}
+      @browsers = []
       
       while(true)
         call = eval _in.gets.to_s.strip
@@ -37,13 +37,22 @@ module Culerity
       @browser_options = options
     end
     
-    def browser
-      @browser ||= Celerity::Browser.new @browser_options || {}
+    def new_browser(options, number = nil)
+      number ||= @browsers.size
+      @browsers[number] = Celerity::Browser.new(options || @browser_options || {})
+      "browser#{number}"
+    end
+
+    def browser(number)
+      unless @browsers[number]
+        new_browser(nil, number)
+      end
+      @browsers[number]
     end
     
     def target(object_id)
-      if object_id == 'browser'
-        browser
+      if object_id =~ /browser(\d+)/
+        browser($1.to_i)
       elsif object_id == 'celerity'
         self
       else
