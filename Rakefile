@@ -4,6 +4,7 @@ require 'rake/rdoctask'
 # require 'rcov/rcovtask'
 
 begin
+  require 'rubygems' unless ENV['NO_RUBYGEMS']
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "culerity"
