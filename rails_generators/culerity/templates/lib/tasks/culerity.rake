@@ -27,8 +27,8 @@ namespace 'culerity' do
   
   desc "Install required gems into jruby"
   task :install => :environment do
-    jgem_cmd = `which jgem`.strip
+    jgem_cmd = `which jruby`.strip
     raise "ERROR: You need to install jruby to use culerity and celerity." if jgem_cmd.blank?
-    sh "#{jgem_cmd} install jarib-celerity --source=http://gems.github.com"
+    sh "#{jgem_cmd} -S gem install jarib-celerity --source=http://gems.github.com"
   end
 end
