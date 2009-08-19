@@ -23,6 +23,9 @@ namespace 'culerity' do
         puts "No culerity rails server running. Doing nothing."
       end
     end
+
+    desc "Restarts the rails server for cucumber/culerity tests"
+    task :restart => [:stop, :start]
   end
   
   desc "Install required gems into jruby"
