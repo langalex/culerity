@@ -12,7 +12,6 @@ Feature: Installing culerity
     When I run executable "script/generate" with arguments "culerity"
     And I setup load path to local code
   
-
   Scenario: Install culerity and setup jruby environment
     Given I have jruby installed
     When I invoke task "rake culerity:install"
