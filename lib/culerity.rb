@@ -32,6 +32,11 @@ module Culerity
     # open named pipes to communicate with celerity_server + return them
   end
   
+  def self.run_rails
+    port        = 3001
+    environment = 'culerity_development'
+    IO.popen("script/server -e #{environment} -p #{port}", 'r+')
+  end
 end
 
 if __FILE__ == $0
