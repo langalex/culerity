@@ -18,6 +18,7 @@ Feature: Running cucumber without explicitly running external services
     Then file "tmp/culerity_rails_server.pid" is not created
     And I should see "1 scenario"
     And I should see "5 steps (5 passed)"
+    And I should see "WARNING: Speed up execution by running 'rake culerity:rails:start'"
   
   
   

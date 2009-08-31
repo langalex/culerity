@@ -19,18 +19,8 @@ When /^I add a feature file to test Rails index.html default file$/ do
   end
 end
 
-Given /^I run the rails server in environment "([^\"]*)"$/ do |environment|
-  in_project_folder do
-    $rails_server ||= IO.popen("script/server -e #{environment} -p 3001", 'r+')
-    File.open("tmp/culerity_rails_server.pid", "w") { |file| file << $rails_server.pid; file.flush }
-  end
-end
-
 After do
   in_project_folder do
     Given 'I invoke task "rake culerity:rails:stop"'
   end
 end
-
-# rake culerity:rails:start [RAILS=culerity_development]
-# rake culerity:rails:stop

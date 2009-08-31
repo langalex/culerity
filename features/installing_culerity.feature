@@ -38,6 +38,7 @@ Feature: Installing culerity
     And I run executable "cucumber" with arguments "features/"
     Then I should see "1 scenario"
     And I should see "5 steps (5 passed)"
+    And I should not see "WARNING: Speed up executing by running 'rake culerity:rails:start'"
 
   
   

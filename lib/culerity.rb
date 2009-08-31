@@ -6,7 +6,7 @@ module Culerity
   module ServerCommands
     def exit_server
       self << '["_exit_"]'
-      close
+      Process.kill(6, self.pid.to_i)
     end
 
     def close_browsers
@@ -33,9 +33,13 @@ module Culerity
   end
   
   def self.run_rails
-    port        = 3001
-    environment = 'culerity_development'
-    IO.popen("script/server -e #{environment} -p #{port}", 'r+')
+    unless File.exists?("tmp/culerity_rails_server.pid")
+      puts "WARNING: Speed up execution by running 'rake culerity:rails:start'"
+      port        = 3001
+      environment = 'culerity_development'
+      puts "Launched rails on :#{port}..."
+      return IO.popen("script/server -e #{environment} -p #{port}", 'r+')
+    end
   end
 end
 
