@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{culerity}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang"]
-  s.date = %q{2009-08-16}
+  s.date = %q{2009-09-08}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{alex@upstream-berlin.com}
   s.extra_rdoc_files = [
@@ -21,8 +21,10 @@ Gem::Specification.new do |s|
      "culerity.gemspec",
      "features/fixtures/sample_feature",
      "features/installing_culerity.feature",
+     "features/running_cucumber_without_explicitly_running_external_services.feature",
      "features/step_definitions/common_steps.rb",
      "features/step_definitions/culerity_setup_steps.rb",
+     "features/step_definitions/jruby_steps.rb",
      "features/step_definitions/rails_setup_steps.rb",
      "features/support/common.rb",
      "features/support/env.rb",
@@ -49,7 +51,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/langalex/culerity}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.3}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.test_files = [
     "spec/celerity_server_spec.rb",
