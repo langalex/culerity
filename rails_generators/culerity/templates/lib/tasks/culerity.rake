@@ -1,7 +1,7 @@
 namespace 'culerity' do
   namespace 'rails' do
     desc "Starts a rails server for cucumber/culerity tests"
-    task :start => :environment do
+    task :start do
       port = ENV['PORT'] || 3001
       environment = 'culerity_development'
       pid_file = RAILS_ROOT + "/tmp/culerity_rails_server.pid"
@@ -14,7 +14,7 @@ namespace 'culerity' do
     end
 
     desc "Stops the running rails server for cucumber/culerity tests"
-    task :stop => :environment do
+    task :stop do
       pid_file = RAILS_ROOT + "/tmp/culerity_rails_server.pid"
       if File.exists?(pid_file)
         pid = File.read(pid_file).to_i
@@ -30,7 +30,7 @@ namespace 'culerity' do
   end
   
   desc "Install required gems into jruby"
-  task :install => :environment do
+  task :install do
     jgem_cmd = `which jruby`.strip
     raise "ERROR: You need to install jruby to use culerity and celerity." if jgem_cmd.blank?
     sh "#{jgem_cmd} -S gem install jarib-celerity --source=http://gems.github.com"
