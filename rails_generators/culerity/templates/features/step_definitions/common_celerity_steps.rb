@@ -1,8 +1,11 @@
 require 'culerity'
 
 Before do
-  $rails_server ||= Culerity::run_rails
-  sleep 5
+  unless $rails_server
+    $rails_server = Culerity::run_rails
+    sleep 5
+  end
+  
   $server ||= Culerity::run_server
   $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}
   @host = 'http://localhost:3001'
