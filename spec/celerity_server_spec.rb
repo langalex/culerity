@@ -66,6 +66,15 @@ describe Culerity::CelerityServer do
     _out.should_receive(:<<).with("[:return, Culerity::RemoteObjectProxy.new(456, @io)]\n")
     Culerity::CelerityServer.new(_in, _out)
   end
+
+  it "should send back arrays" do
+    @browser.stub!(:goto).and_return([true, false, "test", 1, 12.3, nil, stub('123', :object_id => 456), ["test2", 32.1, 5000, nil, false, true, stub('789', :object_id => 101)]])
+    _in = stub 'in'
+    _in.stub!(:gets).and_return("[\"browser0\", \"goto\", \"/homepage\"]\n", "[\"_exit_\"]\n")
+    _out = stub 'out'
+    _out.should_receive(:<<).with("[:return, [true, false, \"test\", 1, 12.3, nil, Culerity::RemoteObjectProxy.new(456, @io), [\"test2\", 32.1, 5000, nil, false, true, Culerity::RemoteObjectProxy.new(101, @io)]]]\n")
+    Culerity::CelerityServer.new(_in, _out)
+  end
   
   it "should pass the method call to a proxy" do
     proxy = stub('123', :object_id => 456)

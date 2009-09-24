@@ -67,11 +67,11 @@ module Culerity
       end
     end
     
-    def proxify(result, in_array = false)
+    def proxify(result)
       if result.is_a?(Array)
-        result.map {|x| proxify(x, true) }.inspect
+        "[" + result.map {|x| proxify(x) }.join(", ") + "]"
       elsif [String, TrueClass, FalseClass, Fixnum, Float, NilClass].include?(result.class)
-        in_array ? result : result.inspect
+        result.inspect
       else
         @proxies[result.object_id] = result
         "Culerity::RemoteObjectProxy.new(#{result.object_id}, @io)"
