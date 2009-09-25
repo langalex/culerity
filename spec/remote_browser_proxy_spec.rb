@@ -17,7 +17,7 @@ describe Culerity::RemoteBrowserProxy do
     proxy.goto.should == :okay
   end
   
-  it "should send the brower options to the remote server" do
+  it "should send the browser options to the remote server" do
     io = stub 'io', :gets => "[:return, \"browser0\"]"
     io.should_receive(:<<).with('["celerity", "new_browser", {:browser=>:firefox}]' + "\n")
     proxy = Culerity::RemoteBrowserProxy.new io, {:browser => :firefox}
