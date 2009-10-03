@@ -27,6 +27,10 @@ When /I follow "(.*)"/ do |link|
   assert_successful_response
 end
 
+When /I fill in "(.*)" with "(.*)"/ do |field, value|
+  $browser.text_field(:id, find_label(field).for).set(value)
+end
+
 When /I fill in "(.*)" for "(.*)"/ do |value, field|
   $browser.text_field(:id, find_label(field).for).set(value)
 end
