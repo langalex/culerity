@@ -88,10 +88,11 @@ def assert_successful_response
     $browser.goto location
     assert_successful_response
   elsif status != 200
-    tmp = Tempfile.new 'culerity_results'
-    tmp << $browser.html
-    tmp.close
-    `open -a /Applications/Safari.app #{tmp.path}`
+    filename = "culerity-#{Time.now.to_i}.html"
+    File.open(RAILS_ROOT + "/tmp/#{filename}", "w") do |f|
+      f.write $browser.html
+    end
+    `open tmp/#{filename}`
     raise "Browser returned Response Code #{$browser.page.web_response.status_code}"
   end
 end
