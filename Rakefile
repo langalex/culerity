@@ -1,7 +1,6 @@
 require 'rake'
-require 'rake/testtask'
+require 'spec/rake/spectask'
 require 'rake/rdoctask'
-# require 'rcov/rcovtask'
 
 begin
   require 'rubygems' unless ENV['NO_RUBYGEMS']
@@ -20,10 +19,9 @@ rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
-Rake::TestTask.new do |t|
-  t.libs << 'lib'
-  t.pattern = 'spec/**/*_spec.rb'
-  t.verbose = false
+desc "Run all unit specs"
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_files = FileList['spec/*_spec.rb']
 end
 
 Rake::RDocTask.new do |rdoc|
@@ -34,10 +32,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-# Rcov::RcovTask.new do |t|
-#   t.libs << 'spec'
-#   t.test_files = FileList['spec/**/*_spec.rb']
-#   t.verbose = true
-# end
-
-task :default => :test
+task :default => :spec
