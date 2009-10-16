@@ -1,10 +1,7 @@
 require 'culerity'
 
 Before do
-  unless $rails_server
-    $rails_server = Culerity::run_rails
-    sleep 5
-  end
+  $rails_server ||= Culerity::run_rails
   
   $server ||= Culerity::run_server
   $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}

@@ -1,6 +1,12 @@
 require File.dirname(__FILE__) + '/culerity/remote_object_proxy'
 require File.dirname(__FILE__) + '/culerity/remote_browser_proxy'
 
+Symbol.class_eval do
+  def to_proc
+    Proc.new{|object| object.send(self)}
+  end
+end unless :symbol.respond_to?(:to_proc)
+
 module Culerity
 
   module ServerCommands
@@ -32,13 +38,15 @@ module Culerity
     # open named pipes to communicate with celerity_server + return them
   end
   
-  def self.run_rails
-    unless File.exists?("tmp/culerity_rails_server.pid")
+  def self.run_rails(options = {})
+    if defined?(Rails) && !File.exists?("tmp/culerity_rails_server.pid")
       puts "WARNING: Speed up execution by running 'rake culerity:rails:start'"
-      port        = 3001
-      environment = 'culerity_development'
+      port        = options[:port] || 3001
+      environment = options[:environment] || 'culerity_development'
       puts "Launched rails on :#{port}..."
-      return IO.popen("script/server -e #{environment} -p #{port}", 'r+')
+      io = IO.popen("script/server -e #{environment} -p #{port}", 'r+')
+      sleep 5
+      io
     end
   end
 end
