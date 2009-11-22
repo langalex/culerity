@@ -3,7 +3,7 @@ class CulerityGenerator < Rails::Generator::Base
   def manifest
     record do |m|
       m.directory 'features/step_definitions'
-      m.file 'features/step_definitions/common_celerity_steps.rb', 'features/step_definitions/common_celerity_steps.rb'
+      m.file 'features/step_definitions/culerity_steps.rb', 'features/step_definitions/culerity_steps.rb'
       m.file 'config/environments/culerity_continuousintegration.rb', 'config/environments/culerity_continuousintegration.rb'
       m.file 'config/environments/culerity_development.rb', 'config/environments/culerity_development.rb'
 

@@ -24,7 +24,7 @@ Feature: Installing culerity
     Then file "tmp/culerity_rails_server.pid" is not created
 
   Scenario: Install culerity into a Rails app and check it works
-    Then file "features/step_definitions/common_celerity_steps.rb" is created
+    Then file "features/step_definitions/culerity_steps.rb" is created
     Then file "config/environments/culerity_development.rb" is created
     Then file "config/environments/culerity_continuousintegration.rb" is created
     
