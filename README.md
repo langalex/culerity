@@ -93,19 +93,19 @@ I want to test emails but the ActionMailer::Base.deliveries array is always empt
 
 ## Links to Celerity documentation
 
-* "How to select elements":http://celerity.rubyforge.org/yard/Celerity/Container.html
-* "FAQ":http://wiki.github.com/jarib/celerity/faq
-* "Tutorial":http://wiki.github.com/jarib/celerity/getting-started
-* "API docs":http://celerity.rubyforge.org/yard/
+* [How to select elements](http://celerity.rubyforge.org/yard/Celerity/Container.html)
+* [FAQ](http://wiki.github.com/jarib/celerity/faq)
+* [Tutorial](http://wiki.github.com/jarib/celerity/getting-started)
+* [API docs](http://celerity.rubyforge.org/yard/)
 
 ## Links
 
-* "cucumber":http://github.com/aslakhellesoy/cucumber/wikis
-* "celerity":http://celerity.rubyforge.org
-* "jruby":http://jruby.codehaus.org
-* "rspec":http://rspec.info
-* "htmlunit":http://htmlunit.sourceforge.net/
+* [Cucumber](http://github.com/aslakhellesoy/cucumber/wikis)
+* [Celerity](http://celerity.rubyforge.org)
+* [JRuby](http://jruby.org)
+* [RSpec](http://rspec.info)
+* [HtmlUnit](http://htmlunit.sourceforge.net/)
 
 ## Contact
 
-Written 2009 by Alexander Lang, contact alex[at]upstream-berlin.com or http://github.com/langalex, released under the MIT license
+Written 2009 by Alexander Lang, contact alex[at]upstream-berlin.com or <http://github.com/langalex>, released under the MIT license
