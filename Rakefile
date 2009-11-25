@@ -16,7 +16,7 @@ begin
     s.add_dependency 'rspec' 
   end
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts 'Jeweler (or a dependency) not available. Install it with: gem install jeweler'
 end
 
 desc "Run all unit specs"
