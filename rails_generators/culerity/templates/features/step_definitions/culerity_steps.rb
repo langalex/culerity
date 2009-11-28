@@ -1,7 +1,7 @@
 require 'culerity'
 
 Before do
-  $rails_server ||= Culerity::run_rails(:environment => 'culerity', :port => 3001)
+  $rails_server ||= Culerity::run_rails(:environment => 'culerity_development', :port => 3001)
   $server ||= Culerity::run_server
   $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox3,
     :javascript_exceptions => true,
@@ -18,40 +18,39 @@ at_exit do
   Process.kill(6, $rails_server.pid.to_i) if $rails_server
 end
 
-When /I follow "(.*)"/ do |link|
+When /I follow "([^\"]*)"/ do |link|
   _link = [[:text, /^#{Regexp.escape(link)}$/], [:id, link], [:title, link]].map{|args| $browser.link(*args)}.find{|__link| __link.exist?}
   raise "link \"#{link}\" not found" unless _link
   _link.click
-  $browser.wait
   assert_successful_response
 end
 
-When /I press "(.*)"/ do |button|
+When /I press "([^\"]*)"/ do |button|
   $browser.button(:text, button).click
   assert_successful_response
 end
 
-When /I fill in "(.*)" with "(.*)"/ do |field, value|
+When /I fill in "([^\"]*)" with "([^\"]*)"/ do |field, value|
   find_by_label_or_id(:text_field, field).set(value)
 end
 
-When /I fill in "(.*)" for "(.*)"/ do |value, field|
+When /I fill in "([^\"]*)" for "([^\"]*)"/ do |value, field|
   find_by_label_or_id(:text_field, field).set(value)
 end
 
-When /I check "(.*)"/ do |field|
+When /I check "([^\"]*)"/ do |field|
   find_by_label_or_id(:check_box, field).set(true)
 end
 
-When /^I uncheck "(.*)"$/ do |field|
+When /^I uncheck "([^\"]*)"$/ do |field|
   find_by_label_or_id(:check_box, field).set(true)
 end
 
-When /I select "(.*)" from "(.*)"/ do |value, field|
+When /I select "([^\"]*)" from "([^\"]*)"/ do |value, field|
   find_by_label_or_id(:select_list, field).select value
 end
 
-When /I choose "(.*)"/ do |field|
+When /I choose "([^\"]*)"/ do |field|
   find_by_label_or_id(:radio, field).set(true)
 end
 
@@ -60,17 +59,28 @@ When /I go to (.+)/ do |path|
   assert_successful_response
 end
 
-When /I wait for the AJAX call to finish/ do
-  $browser.wait
+When /^I wait for the AJAX call to finish$/ do
+  $browser.wait_while do
+    begin
+      count = $browser.execute_script("window.running_ajax_calls").to_i
+      count.to_i > 0
+    rescue => e
+      if e.message.include?('HtmlunitCorejsJavascript::Undefined')
+        raise "For 'I wait for the AJAX call to finish' to work please include culerity.js after including jQuery. If you don't use jQuery please rewrite culerity.js accordingly."
+      else
+        raise(e)
+      end
+    end
+  end
 end
 
-Then /I should see "(.*)"/ do |text|
+Then /I should see "([^\"]*)"/ do |text|
   # if we simply check for the browser.html content we don't find content that has been added dynamically, e.g. after an ajax call
   div = $browser.div(:text, /#{text}/)
   div.should be_exist
 end
 
-Then /I should not see "(.*)"/ do |text|
+Then /I should not see "([^\"]*)"/ do |text|
   div = $browser.div(:text, /#{text}/)
   div.should_not be_exist
 end

@@ -19,6 +19,16 @@ When /^I add a feature file to test Rails index.html default file$/ do
   end
 end
 
+When /^I setup the culerity javascript helpers$/ do
+  `cp #{File.dirname(__FILE__) + "/../fixtures/jquery"} #{File.join(@active_project_folder, 'public', 'javascripts', 'jquery.js')}`
+  in_project_folder do
+    _index = File.read('public/index.html')
+    File.open('public/index.html', 'w') do |f|
+      f << _index.sub('</head>', '<script type="text/javascript" src="javascripts/jquery.js"></script><script type="text/javascript" src="javascripts/culerity.js"></script><script type="text/javascript">jQuery.noConflict();</script></head>')
+    end
+  end
+end
+
 After do
   in_project_folder do
     Given 'I invoke task "rake culerity:rails:stop"'
