@@ -1,6 +1,7 @@
 require 'rake'
 require 'spec/rake/spectask'
 require 'rake/rdoctask'
+require 'cucumber/rake/task'
 
 begin
   require 'rubygems' unless ENV['NO_RUBYGEMS']
@@ -22,6 +23,12 @@ end
 desc "Run all unit specs"
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_files = FileList['spec/*_spec.rb']
+end
+
+desc "Run all features"
+Cucumber::Rake::Task.new(:features) do |t|
+  t.fork = true
+  t.cucumber_opts = ['--format', (ENV['CUCUMBER_FORMAT'] || 'pretty')]
 end
 
 Rake::RDocTask.new do |rdoc|
