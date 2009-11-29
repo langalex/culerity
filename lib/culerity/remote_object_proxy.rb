@@ -3,7 +3,7 @@ module Culerity
   class CulerityException < StandardError
     def initialize(message, backtrace)
       super message
-      #self.backtrace = backtrace
+      set_backtrace(backtrace)      
     end
   end
 
