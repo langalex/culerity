@@ -1,9 +1,10 @@
 module Culerity
-
   class RemoteBrowserProxy < RemoteObjectProxy
     def initialize(io, browser_options = {})
       @io = io
-      @remote_object_id = "celerity".inspect
+      #sets the remote receiver to celerity for the new_browser message.
+      @remote_object_id = "celerity".inspect 
+      #celerity server will create a new browser which shall receive the remote calls from now on.
       @remote_object_id = new_browser(browser_options).inspect
     end
     
