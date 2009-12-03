@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] ||= "culerity_development"
+ENV["RAILS_ENV"] ||= "culerity"
 require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
 require 'cucumber/rails/world'
 

@@ -28,7 +28,7 @@ module Culerity
     if defined?(Rails) && !File.exists?("tmp/culerity_rails_server.pid")
       puts "WARNING: Speed up execution by running 'rake culerity:rails:start'"
       port        = options[:port] || 3001
-      environment = options[:environment] || 'culerity_development'
+      environment = options[:environment] || 'culerity'
       rails_server = IO.popen("script/server -e #{environment} -p #{port}", 'r+')
       sleep 5
       rails_server

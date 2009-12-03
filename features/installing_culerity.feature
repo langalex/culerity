@@ -22,8 +22,7 @@ Feature: Installing culerity
 
   Scenario: Install culerity into a Rails app and check it works
     Then file "features/step_definitions/culerity_steps.rb" is created
-    Then file "config/environments/culerity_development.rb" is created
-    Then file "config/environments/culerity_continuousintegration.rb" is created
+    Then file "config/environments/culerity.rb" is created
 
     When I run executable "cucumber" with arguments "features/"
     Then I should see "0 scenarios"

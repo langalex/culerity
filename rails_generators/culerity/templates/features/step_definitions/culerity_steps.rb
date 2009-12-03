@@ -1,7 +1,7 @@
 require 'culerity'
 
 Before do
-  $rails_server ||= Culerity::run_rails(:environment => 'culerity_development', :port => 3001)
+  $rails_server ||= Culerity::run_rails(:environment => 'culerity', :port => 3001)
   $server ||= Culerity::run_server
   $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox3,
     :javascript_exceptions => true,

@@ -5,13 +5,11 @@ class CulerityGenerator < Rails::Generator::Base
       m.directory 'features/step_definitions'
       m.file 'features/step_definitions/culerity_steps.rb', 'features/step_definitions/culerity_steps.rb'
       m.file 'features/support/env.rb', 'features/support/env.rb'
-      m.file 'config/environments/culerity_continuousintegration.rb', 'config/environments/culerity_continuousintegration.rb'
-      m.file 'config/environments/culerity_development.rb', 'config/environments/culerity_development.rb'
+      m.file 'config/environments/culerity.rb', 'config/environments/culerity.rb'
 
       m.gsub_file 'config/database.yml', /cucumber:.*\n/, "cucumber: &CUCUMBER\n"
 
-      m.gsub_file 'config/database.yml', /\z/, "\nculerity_development:\n  <<: *CUCUMBER"
-      m.gsub_file 'config/database.yml', /\z/, "\nculerity_continuousintegration:\n  <<: *CUCUMBER"
+      m.gsub_file 'config/database.yml', /\z/, "\nculerity:\n  <<: *CUCUMBER"
       
       m.file "lib/tasks/culerity.rake", "lib/tasks/culerity.rake"
       

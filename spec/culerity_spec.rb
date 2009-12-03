@@ -14,7 +14,7 @@ describe Culerity, 'run_rails' do
   
   it "should run rails with default values" do
     Rails ||= :rails
-    IO.should_receive(:popen).with("script/server -e culerity_development -p 3001", 'r+')
+    IO.should_receive(:popen).with("script/server -e culerity -p 3001", 'r+')
     Culerity.run_rails
   end
   
