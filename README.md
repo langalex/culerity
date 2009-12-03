@@ -73,7 +73,7 @@ My database is not cleared automatically between scenarios
 
     Before do
       [User, .... all your models].each do |model|
-        mode.delete_all
+        model.delete_all
       end
     end
 
