@@ -13,8 +13,9 @@ begin
     s.homepage = "http://github.com/langalex/culerity"
     s.description = "Culerity integrates Cucumber and Celerity in order to test your application's full stack."
     s.authors = ["Alexander Lang"]
-    s.add_dependency 'cucumber' 
-    s.add_dependency 'rspec' 
+    
+    s.add_development_dependency 'cucumber' 
+    s.add_development_dependency 'rspec'
   end
 rescue LoadError
   puts 'Jeweler (or a dependency) not available. Install it with: gem install jeweler'
