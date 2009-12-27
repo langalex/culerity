@@ -12,15 +12,19 @@ jQuery(function($) {
 				throw(e);
 			}
 			window.running_ajax_calls -= 1;
-		}
+		};
 	};
 	window.running_ajax_calls = 0;
 	
 	var ajax_with_count = function(options) {
-		window.running_ajax_calls += 1;
-		options.success = count_down(options.success);
-		options.error = count_down(options.error);
-		original_ajax(options);
+		if(options.async == false) {
+		  return(original_ajax(options));
+		} else {
+			window.running_ajax_calls += 1;
+			options.success = count_down(options.success);
+			options.error = count_down(options.error);
+			return original_ajax(options);
+		}
 	};
 
 	$.ajax = ajax_with_count;
