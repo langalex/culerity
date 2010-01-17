@@ -41,7 +41,7 @@ After you have written a first feature you can run it just like you would run a 
     rake culerity:rails:start
     cucumber features/my_feature.feature
 
-The Rails instance uses a special environment culerity_development.
+The Rails instance uses a special environment culerity.
 
 When you have finished running culerity/cucumber you can turn off the Rails instance:
 
