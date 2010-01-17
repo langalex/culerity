@@ -1,3 +1,6 @@
+## master
+
+* removed separate development and continuous integration environments and replaced them with a single one (thilo)
 
 ## 0.2.7
 
