@@ -4,9 +4,10 @@ describe Culerity::RemoteBrowserProxy do
   before(:each) do
     @io = stub 'io', :gets => "[:return, \"browser0\"]", :<<  => nil
   end
+  
   it "should send the serialized method call to the output" do
-    @io.should_receive(:<<).with("[\"celerity\", \"new_browser\", {}]\n").ordered
-    @io.should_receive(:<<).with("[\"browser0\", \"goto\", \"/homepage\"]\n").ordered
+    @io.should_receive(:<<).with("[[\"celerity\", \"new_browser\", {}]]\n").ordered
+    @io.should_receive(:<<).with("[[\"browser0\", \"goto\", \"/homepage\"]]\n").ordered
     proxy = Culerity::RemoteBrowserProxy.new @io
     proxy.goto '/homepage'
   end
@@ -19,7 +20,7 @@ describe Culerity::RemoteBrowserProxy do
   
   it "should send the browser options to the remote server" do
     io = stub 'io', :gets => "[:return, \"browser0\"]"
-    io.should_receive(:<<).with('["celerity", "new_browser", {:browser=>:firefox}]' + "\n")
+    io.should_receive(:<<).with('[["celerity", "new_browser", {:browser=>:firefox}]]' + "\n")
     proxy = Culerity::RemoteBrowserProxy.new io, {:browser => :firefox}
   end
   
@@ -52,7 +53,7 @@ describe Culerity::RemoteBrowserProxy do
 
     proxy.should_receive(:send_remote).with(:add_listener, :confirm).and_return(true)
     proxy.should_receive(:send_remote).with(:goto, "http://example.com").and_return(true)
-    proxy.should_receive(:send_remote).with(:remove_listener, :confirm).and_return(true)
+    proxy.should_receive(:send_remote).with(:remove_listener, :confirm, an_instance_of(Proc)).and_return(true)
 
     proxy.confirm(true) do
       proxy.goto "http://example.com"

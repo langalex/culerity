@@ -19,22 +19,22 @@ describe Culerity::RemoteObjectProxy do
   
   it "should send the serialized method call to the output" do
     io = stub 'io', :gets => '[:return]'
-    io.should_receive(:<<).with(%Q{[345, "goto", "/homepage"]\n})
+    io.should_receive(:<<).with(%Q{[[345, "goto", "/homepage"]]\n})
     proxy = Culerity::RemoteObjectProxy.new 345, io
     proxy.goto '/homepage'
   end
   
-  it "should send the serialized method call with argument plus block to the output" do
+  it "should send the serialized method call with a proc argument to the output" do
     io = stub 'io', :gets => "[:return]"
-    io.should_receive(:<<).with(%Q{[345, "method", true, lambda { true }]\n})
+    io.should_receive(:<<).with(%Q{[[345, "method", true, lambda { true }]]\n})
     proxy = Culerity::RemoteObjectProxy.new 345, io
     
-    proxy.send_remote(:method, true) { "lambda { true }" }
+    proxy.send_remote(:method, true, lambda{true})
   end
   
-  it "should send the serialized method call without argument plus block to the output" do
+  it "should send the serialized method call and a block to the output" do
     io = stub 'io', :gets => "[:return]"
-    io.should_receive(:<<).with(%Q{[345, "method", lambda { true }]\n})
+    io.should_receive(:<<).with(%Q{[[345, "method"], lambda { true }]\n})
     proxy = Culerity::RemoteObjectProxy.new 345, io
     
     proxy.send_remote(:method) { "lambda { true }" }

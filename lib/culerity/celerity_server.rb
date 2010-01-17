@@ -10,19 +10,12 @@ module Culerity
       @browsers = []
 
       while(true)
-        call = eval _in.gets.to_s.strip
-        return if call == ["_exit_"]
-        next(close_browsers) if call == ["_close_browsers_"]
+        call, block = eval _in.gets.to_s.strip
+        return if call == "_exit_"
+        next(close_browsers) if call == "_close_browsers_"
         unless call.nil?
           begin
-            # check if last arg is a block
-            if call.last.is_a?(Proc)
-              # pass as &call[-1]
-              result = target(call.first).send call[1], *call[2..-2], &call[-1]
-            else
-              # just call with args as normal
-              result = target(call.first).send call[1], *call[2..-1]
-            end
+            result = target(call.first).send call[1], *call[2..-1], &block
             _out << "[:return, #{proxify result}]\n"
           rescue => e
             _out << "[:exception, \"#{e.class.name}\", #{e.message.inspect}, #{e.backtrace.inspect}]\n"
