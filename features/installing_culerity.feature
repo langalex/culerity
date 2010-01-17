@@ -8,7 +8,7 @@ Feature: Installing culerity
       And I run executable "script/generate" with arguments "cucumber"
       And I delete file "features/step_definitions/webrat_steps.rb"
       And I delete file "features/support/env.rb"
-      And I copy the project generators into "vendor/generators"
+      And culerity is installed as a plugin
       And I invoke task "rake db:migrate"
     When I run executable "script/generate" with arguments "culerity"
       And I setup load path to local code

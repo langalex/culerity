@@ -5,11 +5,17 @@ Given /^a Rails app$/ do
   @active_project_folder = File.expand_path(File.join(@tmp_root, "my_project"))
 end
 
-Given /^I copy the project generators into "([^\"]*)"$/ do |target_folder|
+Given /^culerity is installed as a plugin$/ do
+  generators_folder = 'vendor/generators'
+  plugin_folder = 'vendor/plugins/culerity'
   in_project_folder do
-    FileUtils.mkdir_p(target_folder)
+    FileUtils.mkdir_p(generators_folder)
+    FileUtils.mkdir_p(plugin_folder)
   end
-  `cp -rf #{File.dirname(__FILE__) + "/../../rails_generators/*"} #{File.join(@active_project_folder, target_folder)}`
+  `cp -rf #{File.dirname(__FILE__) + "/../../rails_generators/*"} #{File.join(@active_project_folder, generators_folder)}`
+  `cp -rf #{File.dirname(__FILE__) + "/../../lib"} #{File.join(@active_project_folder, plugin_folder)}`
+  `cp -rf #{File.dirname(__FILE__) + "/../../rails"} #{File.join(@active_project_folder, plugin_folder)}`
+  `cp -rf #{File.dirname(__FILE__) + "/../../init.rb"} #{File.join(@active_project_folder, plugin_folder)}`
 end
 
 When /^I add a feature file to test Rails index.html default file$/ do

@@ -77,10 +77,6 @@ My database is not cleared automatically between scenarios
       end
     end
 
-I want to test emails but the ActionMailer::Base.deliveries array is always empty.
-
-* that's because the :test delivery method stores all emails in memory, but now that your test process is not the same as your rails process you don't have access to that array. install the http://github.com/ngty/action_mailer_cache_delivery plugin to access the emails in your rails process via a temporary file
-
 
 ## Links to Celerity documentation
 
