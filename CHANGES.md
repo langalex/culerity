@@ -2,7 +2,7 @@
 
 * fixed RemoteBrowser#confirm called celerity remove_listener with invalid arguments
 * extended communication protocol to be able to send procs as arguments and blocks
-* default mail delivery method is not persistent, ActionMailer::Base.deliveries works again in features
+* default mail delivery method is now 'persistent', ActionMailer::Base.deliveries works again in features
 
 
 ## 0.2.5
