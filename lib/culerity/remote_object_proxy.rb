@@ -21,8 +21,8 @@ module Culerity
       send_remote(:id)
     end
 
-    def method_missing(name, *args)
-      send_remote(name, *args)
+    def method_missing(name, *args, &block)
+      send_remote(name, *args, &block)
     end
 
     #
@@ -34,9 +34,9 @@ module Culerity
     # straight through, otherwise it will be wrapped in a lambda string before sending.
     #
     def send_remote(name, *args, &blk)
-      input = [remote_object_id, %Q{"#{name}"}, *args.map{|a| a.inspect}]
-      input << block_to_string(&blk) if block_given?
-      @io << "[#{input.join(", ")}]\n"
+      input = [remote_object_id, %Q{"#{name}"}, *args.map{|a| arg_to_string(a)}]
+      serialized_block = ", #{block_to_string(&blk)}" if block_given?
+      @io << "[[#{input.join(", ")}]#{serialized_block}]\n"
       process_result @io.gets.to_s.strip
     end
 
@@ -67,6 +67,14 @@ module Culerity
         result = "lambda { #{result} }"
       end
       result
+    end
+    
+    def arg_to_string(arg)
+      if arg.is_a?(Proc)
+        block_to_string(&arg)
+      else
+        arg.inspect
+      end
     end
 
     def remote_object_id

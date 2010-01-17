@@ -49,7 +49,7 @@ module Culerity
       
       self.send_remote(:add_listener, :confirm) { blk }
       block.call
-      self.send_remote(:remove_listener, :confirm) { blk }
+      self.send_remote(:remove_listener, :confirm, lambda {blk})
     end
     
   end
