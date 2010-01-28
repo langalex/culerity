@@ -43,7 +43,7 @@ When /I check "([^\"]*)"/ do |field|
 end
 
 When /^I uncheck "([^\"]*)"$/ do |field|
-  find_by_label_or_id(:check_box, field).set(true)
+  find_by_label_or_id(:check_box, field).set(false)
 end
 
 When /I select "([^\"]*)" from "([^\"]*)"/ do |value, field|
