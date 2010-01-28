@@ -23,7 +23,12 @@ Given /^(?:|I )am on (.+)$/ do |page_name|
 end
 
 When /I follow "([^\"]*)"/ do |link|
-  _link = [[:text, /^#{Regexp.escape(link)}$/], [:id, link], [:title, link]].map{|args| $browser.link(*args)}.find{|__link| __link.exist?}
+  _link = [
+    [:text, /^#{Regexp.escape(link)}$/ ], 
+    [:id, link], 
+    [:title, link],
+    [:text, /#{Regexp.escape(link)}/ ], 
+  ].map{|args| $browser.link(*args)}.find{|__link| __link.exist?}
   raise "link \"#{link}\" not found" unless _link
   _link.click
   assert_successful_response
@@ -100,18 +105,18 @@ end
 Then /^the "([^\"]*)" field should contain "([^\"]*)"$/ do |field, value|
   f = find_by_label_or_id(:text_field, field)
   if defined?(Spec::Rails::Matchers)
-    f.text.should =~ /#{Regexp::escape value}/
+    f.text.should =~ /#{Regexp::escape(value)}/
   else
-    assert_match(/#{Regexp::escape value}/, f.text)
+    assert_match(/#{Regexp::escape(value)}/, f.text)
   end
 end
 
 Then /^the "([^\"]*)" field should not contain "([^\"]*)"$/ do |field, value|
   f = find_by_label_or_id(:text_field, field)
   if defined?(Spec::Rails::Matchers)
-    f.text.should_not =~ /#{Regexp::escape value}/
+    f.text.should_not =~ /#{Regexp::escape(value)}/
   else
-    assert_no_match(/#{Regexp::escape value}/, f.text)
+    assert_no_match(/#{Regexp::escape(value)}/, f.text)
   end
 end
 
@@ -135,12 +140,12 @@ end
 
 Then /I should see "([^\"]*)"/ do |text|
   # if we simply check for the browser.html content we don't find content that has been added dynamically, e.g. after an ajax call
-  div = $browser.div(:text, /#{text}/)
+  div = $browser.div(:text, /#{Regexp::escape(text)}/)
   div.should be_exist
 end
 
 Then /I should not see "([^\"]*)"/ do |text|
-  div = $browser.div(:text, /#{text}/)
+  div = $browser.div(:text, /#{Regexp::escape(text)}/)
   div.should_not be_exist
 end
 
