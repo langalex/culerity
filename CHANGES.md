@@ -1,6 +1,7 @@
 ## master
 
 * removed separate development and continuous integration environments and replaced them with a single one (thilo)
+* more webrat like step definitions (lupine)
 
 ## 0.2.7
 
