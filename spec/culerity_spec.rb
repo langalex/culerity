@@ -5,25 +5,25 @@ describe Culerity, 'run_rails' do
     Kernel.stub!(:sleep)
     IO.stub!(:popen)
     Culerity.stub!(:fork).and_yield.and_return(3200)
-    Culerity.stub!(:system)
+    Culerity.stub!(:exec)
     Culerity.stub!(:sleep)
     [$stdin, $stdout, $stderr].each{|io| io.stub(:reopen)}
   end
   
   it "should not run rails if we are not using rails" do
-    Culerity.should_not_receive(:system)
+    Culerity.should_not_receive(:exec)
     Culerity.run_rails :port => 4000, :environment => 'culerity'
   end
   
   it "should run rails with default values" do
     Rails ||= stub(:rails, :root => Dir.pwd)
-    Culerity.should_receive(:system).with("script/server -e culerity -p 3001")
+    Culerity.should_receive(:exec).with("script/server -e culerity -p 3001")
     Culerity.run_rails
   end
   
   it "should run rails with the given values" do
     Rails ||= stub(:rails, :root => Dir.pwd)
-    Culerity.should_receive(:system).with("script/server -e culerity -p 4000")
+    Culerity.should_receive(:exec).with("script/server -e culerity -p 4000")
     Culerity.run_rails :port => 4000, :environment => 'culerity'
   end
 

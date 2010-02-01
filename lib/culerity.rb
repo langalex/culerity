@@ -34,7 +34,7 @@ module Culerity
         $stdout.reopen "/dev/null"
         $stderr.reopen "/dev/null"
         Dir.chdir(Rails.root) do
-          system("script/server -e #{environment} -p #{port}")
+          exec "script/server -e #{environment} -p #{port}"
         end
       end
       sleep 5
