@@ -29,7 +29,14 @@ module Culerity
       puts "WARNING: Speed up execution by running 'rake culerity:rails:start'"
       port        = options[:port] || 3001
       environment = options[:environment] || 'culerity'
-      rails_server = IO.popen("script/server -e #{environment} -p #{port}", 'r+')
+      rails_server = fork do
+        $stdin.reopen "/dev/null"
+        $stdout.reopen "/dev/null"
+        $stderr.reopen "/dev/null"
+        Dir.chdir(Rails.root) do
+          system("script/server -e #{environment} -p #{port}")
+        end
+      end
       sleep 5
       rails_server
     end
