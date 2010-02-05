@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{culerity}
-  s.version = "0.2.7"
+  s.version = "0.2.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang"]
-  s.date = %q{2010-01-17}
+  s.date = %q{2010-02-06}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{alex@upstream-berlin.com}
   s.extra_rdoc_files = [
@@ -40,10 +40,12 @@ Gem::Specification.new do |s|
      "lib/culerity/persistent_delivery.rb",
      "lib/culerity/remote_browser_proxy.rb",
      "lib/culerity/remote_object_proxy.rb",
+     "lib/tasks/rspec.rake",
      "rails/init.rb",
      "rails_generators/culerity/culerity_generator.rb",
      "rails_generators/culerity/templates/config/environments/culerity.rb",
-"rails_generators/culerity/templates/features/step_definitions/culerity_steps.rb",
+     "rails_generators/culerity/templates/config/environments/culerity_continuousintegration.rb",
+     "rails_generators/culerity/templates/features/step_definitions/culerity_steps.rb",
      "rails_generators/culerity/templates/features/support/env.rb",
      "rails_generators/culerity/templates/lib/tasks/culerity.rake",
      "rails_generators/culerity/templates/public/javascripts/culerity.js",
