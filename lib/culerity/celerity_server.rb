@@ -41,6 +41,7 @@ module Culerity
     def close_browsers
       @browsers.each { |browser| browser.close }
       @browsers = []
+      @proxies = {}
     end
 
     def browser(number)
