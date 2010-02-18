@@ -18,6 +18,10 @@ module Culerity
     def close_browsers
       self.puts '["_close_browsers_"]'
     end
+    
+    def clear_proxies
+      self.puts '["_clear_proxies_"]'      
+    end
   end
 
   def self.run_server
