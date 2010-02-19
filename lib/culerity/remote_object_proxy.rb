@@ -62,8 +62,8 @@ module Culerity
     # Returns a string in the format "lambda { … }"
     #
     def block_to_string &block
-      result = block.call.to_s
-      unless result.is_a?(String) && result[/^lambda \s* \{ .*? \}/xm]
+      result = block.call.to_s.strip
+      unless result.is_a?(String) && result[/^lambda\s*(\{|do).+(\}|end)/xm]
         result = "lambda { #{result} }"
       end
       result.gsub("\n", ";")
