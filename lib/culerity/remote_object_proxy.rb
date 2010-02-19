@@ -63,10 +63,10 @@ module Culerity
     #
     def block_to_string &block
       result = block.call.to_s
-      unless result.is_a?(String) && result[/^lambda \s* \{ .*? \}/x]
+      unless result.is_a?(String) && result[/^lambda \s* \{ .*? \}/xm]
         result = "lambda { #{result} }"
       end
-      result
+      result.gsub("\n", ";")
     end
     
     def arg_to_string(arg)

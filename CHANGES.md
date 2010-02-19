@@ -1,3 +1,7 @@
+## 0.2.9
+* fixed memory leaks within the java process by clearing proxies (dewind)
+* fixed syntax error when sending multiline lambdas (endor, langalex)
+
 ## 0.2.8
 
 * removed separate development and continuous integration environments and replaced them with a single one (thilo)

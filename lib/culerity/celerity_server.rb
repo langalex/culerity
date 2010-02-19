@@ -64,7 +64,7 @@ module Culerity
     def proxify(result)
       if result.is_a?(Array)
         "[" + result.map {|x| proxify(x) }.join(", ") + "]"
-      elsif [String, TrueClass, FalseClass, Fixnum, Float, NilClass].include?(result.class)
+      elsif [Symbol, String, TrueClass, FalseClass, Fixnum, Float, NilClass].include?(result.class)
         result.inspect
       else
         @proxies[result.object_id] = result
