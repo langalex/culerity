@@ -12,6 +12,10 @@ Before do
   @host = 'http://localhost:3001'
 end
 
+After do
+  $server.close_browsers
+end
+
 at_exit do
   $browser.exit if $browser
   $server.close if $server

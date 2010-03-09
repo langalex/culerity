@@ -79,7 +79,16 @@ describe Culerity::CelerityServer do
     Culerity::CelerityServer.new(_in, _out)
   end
   
-  it "should send back a proxy if the return value is not a string, number, nil or boolean" do
+  it "should send back a symbol" do
+    @browser.stub!(:goto).and_return(:ok)
+    _in = stub 'in'
+    _in.stub!(:gets).and_return("[[\"browser0\", \"goto\"]]\n", "[\"_exit_\"]\n")
+    _out = stub 'out'
+    _out.should_receive(:<<).with("[:return, :ok]\n")
+    Culerity::CelerityServer.new(_in, _out)
+  end
+  
+  it "should send back a proxy if the return value is not a string, number, nil, symbol or boolean" do
     @browser.stub!(:goto).and_return(stub('123', :object_id => 456))
     _in = stub 'in'
     _in.stub!(:gets).and_return("[[\"browser0\", \"goto\", \"/homepage\"]]\n", "[\"_exit_\"]\n")

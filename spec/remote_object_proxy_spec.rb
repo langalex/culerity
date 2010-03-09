@@ -8,6 +8,24 @@ describe Culerity::RemoteObjectProxy do
       proxy.send(:block_to_string, &block).should == "lambda { true}"
     end
     
+    it "should replace newlines in lambda string with semicolons so that the server can parse it as one command" do
+      proxy = Culerity::RemoteObjectProxy.new nil, nil
+      block = lambda { "lambda { \ntrue\n}" }
+      proxy.send(:block_to_string, &block).should == "lambda { ;true;}"
+    end
+
+    it "should accept do end in lambda string instead of {}" do
+      code = <<-CODE
+        lambda do |page, message|
+          true
+        end
+      CODE
+      
+      proxy = Culerity::RemoteObjectProxy.new nil, nil
+      block = lambda { code }
+      proxy.send(:block_to_string, &block).should == "lambda do |page, message|;          true;        end"
+    end
+    
     it "should return lambda string when block result isn't a lambda string" do
       proxy = Culerity::RemoteObjectProxy.new nil, nil
       [true, false, "blah", 5].each do |var|
