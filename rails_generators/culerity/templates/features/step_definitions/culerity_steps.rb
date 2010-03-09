@@ -13,7 +13,8 @@ Before do
 end
 
 After do
-  $server.close_browsers
+  $server.clear_proxies
+  $browser.clear_cookies
 end
 
 at_exit do
