@@ -1,3 +1,6 @@
+## 0.2.10
+* another speed improvement by only clearing cookies instead of closing browsers after each scenario (dewind)
+
 ## 0.2.9
 * fixed memory leaks within the java process by clearing proxies (dewind)
 * fixed syntax error when sending multiline lambdas (endor, langalex)

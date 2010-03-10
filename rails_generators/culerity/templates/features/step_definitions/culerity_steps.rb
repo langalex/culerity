@@ -3,12 +3,14 @@ require 'culerity'
 Before do
   $rails_server ||= Culerity::run_rails(:environment => 'culerity', :port => 3001)
   $server ||= Culerity::run_server
-  $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox3,
-    :javascript_exceptions => true,
-    :resynchronize => true,
-    :status_code_exceptions => true
-  }
-  $browser.log_level = :warning
+  unless $browser
+    $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox3,
+      :javascript_exceptions => true,
+      :resynchronize => true,
+      :status_code_exceptions => true
+    }
+    $browser.log_level = :warning
+  end
   @host = 'http://localhost:3001'
 end
 
