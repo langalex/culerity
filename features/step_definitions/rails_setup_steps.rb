@@ -16,6 +16,7 @@ Given /^culerity is installed as a plugin$/ do
   `cp -rf #{File.dirname(__FILE__) + "/../../lib"} #{File.join(@active_project_folder, plugin_folder)}`
   `cp -rf #{File.dirname(__FILE__) + "/../../rails"} #{File.join(@active_project_folder, plugin_folder)}`
   `cp -rf #{File.dirname(__FILE__) + "/../../init.rb"} #{File.join(@active_project_folder, plugin_folder)}`
+  `cp -rf #{File.dirname(__FILE__) + "/../../bin"} #{File.join(@active_project_folder, plugin_folder)}`
 end
 
 When /^I add a feature file to test Rails index.html default file$/ do

@@ -25,7 +25,7 @@ module Culerity
   end
 
   def self.run_server
-    IO.popen("jruby #{__FILE__}", 'r+').extend(ServerCommands)
+    IO.popen(File.dirname(__FILE__) + "/../bin/run_celerity_server.rb", 'r+').extend(ServerCommands)
   end
   
   def self.run_rails(options = {})
@@ -46,9 +46,3 @@ module Culerity
     end
   end
 end
-
-if __FILE__ == $0
-  require File.dirname(__FILE__) + '/culerity/celerity_server'
-  Culerity::CelerityServer.new STDIN, STDOUT
-end
-
