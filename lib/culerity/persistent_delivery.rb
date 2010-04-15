@@ -31,5 +31,5 @@ module Culerity
   end
 end
 
-ActionMailer::Base.send :include, Culerity::PersistentDelivery
+ActionMailer::Base.send :include, Culerity::PersistentDelivery if defined?(ActionMailer)
 
