@@ -5,13 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{culerity}
-  s.version = "0.2.9"
+  s.version = "0.2.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Lang"]
-  s.date = %q{2010-02-19}
+  s.date = %q{2010-04-28}
+  s.default_executable = %q{run_celerity_server.rb}
   s.description = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.email = %q{alex@upstream-berlin.com}
+  s.executables = ["run_celerity_server.rb"]
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -22,6 +24,7 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION.yml",
+     "bin/run_celerity_server.rb",
      "culerity.gemspec",
      "features/fixtures/jquery",
      "features/fixtures/sample_feature",
@@ -61,7 +64,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/langalex/culerity}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Culerity integrates Cucumber and Celerity in order to test your application's full stack.}
   s.test_files = [
     "spec/celerity_server_spec.rb",
