@@ -60,6 +60,10 @@ describe Culerity do
       IO.stub!(:popen)
     end
     
+    after(:each) do
+      Culerity.jruby_invocation = nil
+    end
+    
     it "knows where it is located" do
       Culerity.culerity_root.should == File.expand_path(File.dirname(__FILE__) + '/../')
     end
@@ -70,8 +74,16 @@ describe Culerity do
       Culerity.celerity_invocation.should == "require '/path/to/culerity/lib/culerity/celerity_server'; Culerity::CelerityServer.new(STDIN, STDOUT)"
     end
     
-    it "knows which JRuby to invoke" do
-      Culerity.jruby_path.should == 'jruby'
+    describe "invoking JRuby" do
+      it "knows how to invoke it" do
+        Culerity.jruby_invocation.should == 'jruby'
+      end
+      
+      it "allows for the invocation to be overridden" do
+        Culerity.jruby_invocation = '/opt/local/bin/jruby'
+        
+        Culerity.jruby_invocation.should == '/opt/local/bin/jruby'
+      end
     end
     
     it "shells out and sparks up jruby with the correct invocation" do
@@ -79,6 +91,15 @@ describe Culerity do
       
       IO.should_receive(:popen).with('jruby -e "CORRECT INVOCATION"', 'r+')
       
+      Culerity.run_server
+    end
+    
+    it "allows a more complex situation, e.g. using RVM + named gemset" do
+      Culerity.stub!(:celerity_invocation).and_return('CORRECT INVOCATION')
+      
+      IO.should_receive(:popen).with('rvm jruby@culerity -e "CORRECT INVOCATION"', 'r+')
+      
+      Culerity.jruby_invocation = "rvm jruby@culerity"
       Culerity.run_server
     end
   end

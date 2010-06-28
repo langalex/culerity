@@ -32,12 +32,16 @@ module Culerity
     "require '#{culerity_root}/lib/culerity/celerity_server'; Culerity::CelerityServer.new(STDIN, STDOUT)"
   end
   
-  def self.jruby_path
-    "jruby"
+  def self.jruby_invocation
+    @jruby_invocation ||= "jruby"
+  end
+  
+  def self.jruby_invocation=(invocation)
+    @jruby_invocation = invocation
   end
   
   def self.run_server
-    IO.popen(%{#{jruby_path} -e "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
+    IO.popen(%{#{jruby_invocation} -e "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
   end
   
   def self.run_rails(options = {})
