@@ -23,9 +23,21 @@ module Culerity
       self.puts '["_clear_proxies_"]'      
     end
   end
-
+  
+  def self.culerity_root
+    File.expand_path('../../', __FILE__)
+  end
+  
+  def self.celerity_invocation
+    "require '#{culerity_root}/lib/culerity/celerity_server'; Culerity::CelerityServer.new(STDIN, STDOUT)"
+  end
+  
+  def self.jruby_path
+    "jruby"
+  end
+  
   def self.run_server
-    IO.popen(File.dirname(__FILE__) + "/../bin/run_celerity_server.rb", 'r+').extend(ServerCommands)
+    IO.popen(%{#{jruby_path} -e "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
   end
   
   def self.run_rails(options = {})

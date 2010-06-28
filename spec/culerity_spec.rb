@@ -1,47 +1,85 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe Culerity, 'run_rails' do
-  before(:each) do
-    Kernel.stub!(:sleep)
-    IO.stub!(:popen)
-    Culerity.stub!(:fork).and_yield.and_return(3200)
-    Culerity.stub!(:exec)
-    Culerity.stub!(:sleep)
-    [$stdin, $stdout, $stderr].each{|io| io.stub(:reopen)}
+describe Culerity do
+  describe 'run_rails' do
+    def stub_rails_root!
+      unless defined?(::Rails)
+        Kernel.const_set "Rails", stub()
+      end
+      Rails.stub!(:root).and_return(Dir.pwd)
+    end
+    
+    before(:each) do
+      Kernel.stub!(:sleep)
+      IO.stub!(:popen)
+      Culerity.stub!(:fork).and_yield.and_return(3200)
+      Culerity.stub!(:exec)
+      Culerity.stub!(:sleep)
+      [$stdin, $stdout, $stderr].each{|io| io.stub(:reopen)}
+    end
+    
+    it "should not run rails if we are not using rails" do
+      Culerity.should_not_receive(:exec)
+      Culerity.run_rails :port => 4000, :environment => 'culerity'
+    end
+    
+    describe "when Rails is being used" do
+      before(:each) do
+        stub_rails_root!
+      end
+      
+      it "should run rails with default values" do
+        Culerity.should_receive(:exec).with("script/server -e culerity -p 3001")
+        Culerity.run_rails
+      end
+      
+      it "should run rails with the given values" do
+        Culerity.should_receive(:exec).with("script/server -e culerity -p 4000")
+        Culerity.run_rails :port => 4000, :environment => 'culerity'
+      end
+      
+      it "should change into the rails root directory" do
+        Dir.should_receive(:chdir).with(Dir.pwd)
+        Culerity.run_rails :port => 4000, :environment => 'culerity'
+      end
+      
+      it "should wait for the server to start up" do
+        Culerity.should_receive(:sleep)
+        Culerity.run_rails :port => 4000, :environment => 'culerity'
+      end
+      
+      it "should reopen the i/o channels to /dev/null" do
+        [$stdin, $stdout, $stderr].each{|io| io.should_receive(:reopen).with("/dev/null")}
+        Culerity.run_rails :port => 4000, :environment => 'culerity'
+      end
+    end
   end
   
-  it "should not run rails if we are not using rails" do
-    Culerity.should_not_receive(:exec)
-    Culerity.run_rails :port => 4000, :environment => 'culerity'
-  end
-  
-  it "should run rails with default values" do
-    Rails ||= stub(:rails, :root => Dir.pwd)
-    Culerity.should_receive(:exec).with("script/server -e culerity -p 3001")
-    Culerity.run_rails
-  end
-  
-  it "should run rails with the given values" do
-    Rails ||= stub(:rails, :root => Dir.pwd)
-    Culerity.should_receive(:exec).with("script/server -e culerity -p 4000")
-    Culerity.run_rails :port => 4000, :environment => 'culerity'
-  end
-
-  it "should change into the rails root directory" do
-    Rails ||= stub(:rails, :root => Dir.pwd)
-    Dir.should_receive(:chdir).with(Dir.pwd)
-    Culerity.run_rails :port => 4000, :environment => 'culerity'
-  end
-  
-  it "should wait for the server to start up" do
-    Rails ||= stub(:rails, :root => Dir.pwd)
-    Culerity.should_receive(:sleep)
-    Culerity.run_rails :port => 4000, :environment => 'culerity'
-  end
-  
-  it "should reopen the i/o channels to /dev/null" do
-    Rails ||= stub(:rails, :root => Dir.pwd)
-    [$stdin, $stdout, $stderr].each{|io| io.should_receive(:reopen).with("/dev/null")}
-    Culerity.run_rails :port => 4000, :environment => 'culerity'
+  describe "run_server" do
+    before(:each) do
+      IO.stub!(:popen)
+    end
+    
+    it "knows where it is located" do
+      Culerity.culerity_root.should == File.expand_path(File.dirname(__FILE__) + '/../')
+    end
+    
+    it "has access to the Celerity invocation" do
+      Culerity.stub!(:culerity_root).and_return('/path/to/culerity')
+      
+      Culerity.celerity_invocation.should == "require '/path/to/culerity/lib/culerity/celerity_server'; Culerity::CelerityServer.new(STDIN, STDOUT)"
+    end
+    
+    it "knows which JRuby to invoke" do
+      Culerity.jruby_path.should == 'jruby'
+    end
+    
+    it "shells out and sparks up jruby with the correct invocation" do
+      Culerity.stub!(:celerity_invocation).and_return('CORRECT INVOCATION')
+      
+      IO.should_receive(:popen).with('jruby -e "CORRECT INVOCATION"', 'r+')
+      
+      Culerity.run_server
+    end
   end
 end
