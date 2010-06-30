@@ -29,7 +29,7 @@ module Culerity
   end
   
   def self.celerity_invocation
-    "require '#{culerity_root}/lib/culerity/celerity_server'; Culerity::CelerityServer.new(STDIN, STDOUT)"
+    %{#{culerity_root}/lib/start_celerity.rb}
   end
   
   def self.jruby_invocation
@@ -41,7 +41,7 @@ module Culerity
   end
   
   def self.run_server
-    IO.popen(%{#{jruby_invocation} -e "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
+    IO.popen(%{#{jruby_invocation} "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
   end
   
   def self.run_rails(options = {})
