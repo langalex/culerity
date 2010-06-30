@@ -13,6 +13,7 @@ Feature: Running cucumber without explicitly running external services
     When I run executable "script/generate" with arguments "culerity"
       And I setup load path to local code
       And I setup the culerity javascript helpers
+      And I add the JRUBY_INVOCATION check to "features/support/env.rb"
   
   Scenario: Successfully run scenarios without requiring celerity or rails processes running
     When I add a feature file to test Rails index.html default file

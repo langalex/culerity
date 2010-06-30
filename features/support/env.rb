@@ -21,3 +21,4 @@ include RubiGen::GeneratorTestHelper
 SOURCES = Dir[File.dirname(__FILE__) + "/../../generators"].map do |f|
   RubiGen::PathSource.new(:test, File.expand_path(f))
 end
+

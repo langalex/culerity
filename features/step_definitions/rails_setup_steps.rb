@@ -26,6 +26,19 @@ When /^I add a feature file to test Rails index.html default file$/ do
   end
 end
 
+When /^I add the JRUBY_INVOCATION check to "features\/support\/env.rb"$/ do
+  invocation_check = %{Culerity.jruby_invocation = ENV["JRUBY_INVOCATION"] if ENV["JRUBY_INVOCATION"]}
+  in_project_folder do
+    unless File.read('features/support/env.rb').match("^#{invocation_check}$")
+      File.open('features/support/env.rb', 'a') do |f|
+        f.puts ""
+        f.puts "require 'culerity'"
+        f.puts invocation_check
+      end
+    end
+  end
+end
+
 When /^I setup the culerity javascript helpers$/ do
   `cp #{File.dirname(__FILE__) + "/../fixtures/jquery"} #{File.join(@active_project_folder, 'public', 'javascripts', 'jquery.js')}`
   in_project_folder do

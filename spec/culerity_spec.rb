@@ -71,7 +71,7 @@ describe Culerity do
     it "has access to the Celerity invocation" do
       Culerity.stub!(:culerity_root).and_return('/path/to/culerity')
       
-      Culerity.celerity_invocation.should == "require '/path/to/culerity/lib/culerity/celerity_server'; Culerity::CelerityServer.new(STDIN, STDOUT)"
+      Culerity.celerity_invocation.should == "/path/to/culerity/lib/start_celerity.rb"
     end
     
     describe "invoking JRuby" do
@@ -87,19 +87,19 @@ describe Culerity do
     end
     
     it "shells out and sparks up jruby with the correct invocation" do
-      Culerity.stub!(:celerity_invocation).and_return('CORRECT INVOCATION')
+      Culerity.stub!(:celerity_invocation).and_return('/path/to/start_celerity.rb')
       
-      IO.should_receive(:popen).with('jruby -e "CORRECT INVOCATION"', 'r+')
+      IO.should_receive(:popen).with('jruby "/path/to/start_celerity.rb"', 'r+')
       
       Culerity.run_server
     end
     
     it "allows a more complex situation, e.g. using RVM + named gemset" do
-      Culerity.stub!(:celerity_invocation).and_return('CORRECT INVOCATION')
+      Culerity.stub!(:celerity_invocation).and_return('/path/to/start_celerity.rb')
       
-      IO.should_receive(:popen).with('rvm jruby@culerity -e "CORRECT INVOCATION"', 'r+')
+      IO.should_receive(:popen).with('rvm jruby@culerity ruby "/path/to/start_celerity.rb"', 'r+')
       
-      Culerity.jruby_invocation = "rvm jruby@culerity"
+      Culerity.jruby_invocation = "rvm jruby@culerity ruby"
       Culerity.run_server
     end
   end
