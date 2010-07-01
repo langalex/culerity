@@ -39,6 +39,14 @@ When /^I add the JRUBY_INVOCATION check to "features\/support\/env.rb"$/ do
   end
 end
 
+When /^(?:I )?add an rvm_verbose_flag=0-wielding \.rvmrc to the home folder$/ do
+  in_home_folder do
+    File.open('.rvmrc', 'w+') do |f|
+      f.puts "rvm_verbose_flag=0"
+    end
+  end
+end
+
 When /^I setup the culerity javascript helpers$/ do
   `cp #{File.dirname(__FILE__) + "/../fixtures/jquery"} #{File.join(@active_project_folder, 'public', 'javascripts', 'jquery.js')}`
   in_project_folder do

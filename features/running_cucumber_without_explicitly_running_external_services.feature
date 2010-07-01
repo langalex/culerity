@@ -14,6 +14,7 @@ Feature: Running cucumber without explicitly running external services
       And I setup load path to local code
       And I setup the culerity javascript helpers
       And I add the JRUBY_INVOCATION check to "features/support/env.rb"
+      And I add an rvm_verbose_flag=0-wielding .rvmrc to the home folder  
   
   Scenario: Successfully run scenarios without requiring celerity or rails processes running
     When I add a feature file to test Rails index.html default file

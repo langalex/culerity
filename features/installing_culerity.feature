@@ -14,7 +14,8 @@ Feature: Installing culerity
       And I setup load path to local code
       And I setup the culerity javascript helpers
       And I add the JRUBY_INVOCATION check to "features/support/env.rb"
-  
+      And I add an rvm_verbose_flag=0-wielding .rvmrc to the home folder  
+      
   Scenario: Install culerity and test the rails start + stop tasks
     When I invoke task "rake culerity:rails:start"
     Then file "tmp/culerity_rails_server.pid" is created
