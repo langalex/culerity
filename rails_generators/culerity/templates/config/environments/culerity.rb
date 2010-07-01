@@ -1,4 +1,4 @@
-config.cache_classes = false
+config.cache_classes = true # set because of https://rspec.lighthouseapp.com/projects/16211/tickets/165
 
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true
