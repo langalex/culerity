@@ -79,10 +79,16 @@ describe Culerity do
         Culerity.jruby_invocation.should == 'jruby'
       end
       
-      it "allows for the invocation to be overridden" do
+      it "allows for the invocation to be overridden directly" do
         Culerity.jruby_invocation = '/opt/local/bin/jruby'
         
         Culerity.jruby_invocation.should == '/opt/local/bin/jruby'
+      end
+      
+      it "allows for the invocation to be overridden from an environment variable" do
+        ENV['JRUBY_INVOCATION'] = 'rvm jruby ruby'
+        
+        Culerity.jruby_invocation.should == 'rvm jruby ruby'
       end
     end
     

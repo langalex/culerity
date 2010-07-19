@@ -33,7 +33,7 @@ module Culerity
   end
   
   def self.jruby_invocation
-    @jruby_invocation ||= "jruby"
+    @jruby_invocation ||= (ENV["JRUBY_INVOCATION"] || "jruby")
   end
   
   def self.jruby_invocation=(invocation)
