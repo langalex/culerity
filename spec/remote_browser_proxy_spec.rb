@@ -28,7 +28,7 @@ describe Culerity::RemoteBrowserProxy do
     proxy = Culerity::RemoteBrowserProxy.new @io
     lambda {
       proxy.wait_until(0.1) { false }
-    }.should raise_error(Timeout::Error)
+    }.should raise_error(RuntimeError)
   end
   
   it "should return successfully when wait_until returns true" do
@@ -40,7 +40,7 @@ describe Culerity::RemoteBrowserProxy do
     proxy = Culerity::RemoteBrowserProxy.new @io
     lambda {
       proxy.wait_while(0.1) { true }
-    }.should raise_error(Timeout::Error)
+    }.should raise_error(RuntimeError)
   end
   
   it "should return successfully when wait_while returns !true" do
