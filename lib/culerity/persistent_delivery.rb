@@ -22,8 +22,8 @@ module Culerity
     end
 
     def perform_delivery_persistent(mail)
-      deliveries << mail
-      File.open(DELIVERIES_PATH,'w') do |f| 
+      deliveries = self.class.deliveries << mail
+      File.open(DELIVERIES_PATH,'w') do |f|
         f << Marshal.dump(deliveries)
       end
     end
