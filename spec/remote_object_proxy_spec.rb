@@ -41,6 +41,13 @@ describe Culerity::RemoteObjectProxy do
     proxy = Culerity::RemoteObjectProxy.new 345, io
     proxy.goto '/homepage'
   end
+
+  it "should send inspect as a serialized method call to the output" do
+    io = stub 'io', :gets => '[:return, "inspect output"]'
+    io.should_receive(:<<).with(%Q{[[345, "inspect"]]\n})
+    proxy = Culerity::RemoteObjectProxy.new 345, io
+    proxy.inspect.should == "inspect output"
+  end
   
   it "should send the serialized method call with a proc argument to the output" do
     io = stub 'io', :gets => "[:return]"
@@ -57,7 +64,7 @@ describe Culerity::RemoteObjectProxy do
     
     proxy.send_remote(:method) { "lambda { true }" }
   end
-  
+    
   it "should return the deserialized return value" do
     io = stub 'io', :gets => "[:return, :okay]\n", :<< => nil
     proxy = Culerity::RemoteObjectProxy.new 345, io

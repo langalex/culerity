@@ -20,7 +20,11 @@ module Culerity
     def id
       send_remote(:id)
     end
-
+    
+    def inspect
+      send_remote(:inspect)
+    end
+    
     def method_missing(name, *args, &block)
       send_remote(name, *args, &block)
     end
