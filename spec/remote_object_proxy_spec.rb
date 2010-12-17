@@ -79,6 +79,20 @@ describe Culerity::RemoteObjectProxy do
     }.should raise_error(Culerity::CulerityException)
   end
   
+  it "should include the full 'local' back trace in addition to the 'remote' backtrace" do
+    io = stub 'io', :gets => %Q{[:exception, "RuntimeError", "test exception", ["Remote", "Backtrace"]]}, :<< => nil
+    proxy = Culerity::RemoteObjectProxy.new 345, io
+    begin
+      proxy.goto '/home'
+    rescue => ex
+      puts ex.backtrace
+      ex.backtrace[0].should == "Remote"
+      ex.backtrace[1].should == "Backtrace"
+      ex.backtrace.detect {|line| line =~ /lib\/culerity\/remote_object_proxy\.rb/}.should_not be_nil
+      ex.backtrace.detect {|line| line =~ /spec\/remote_object_proxy_spec\.rb/}.should_not be_nil
+    end
+  end
+  
   it "should send exit" do
     io = stub 'io', :gets => '[:return]'
     io.should_receive(:<<).with('["_exit_"]')
