@@ -133,4 +133,16 @@ describe Culerity::CelerityServer do
     _out.should_receive(:<<).with(/^\[:exception, \"RuntimeError\", \"test exception with \\\"quotes\\\"\", \[.*\]\]\n$/)
     Culerity::CelerityServer.new(_in, _out)
   end
+  
+  it "should extract a js stack trace if available and prepend it on the regular backtrace" do
+    exception = RuntimeError.new("the exception")
+    exception.stub!(:cause => stub('ex2', :cause => stub('ex3', :getScriptStackTrace => "The\nStack\nTrace")))
+    
+    @browser.stub!(:goto).and_raise(exception)
+    _in = stub 'in'
+    _in.stub!(:gets).and_return("[[\"browser0\", \"goto\", \"/homepage\"]]\n", "[\"_exit_\"]\n")
+    _out = stub 'out'
+    _out.should_receive(:<<).with(/^\[:exception, \"RuntimeError\", \"the exception\", \[\"The\", \"Stack\", \"Trace\", \".*\"\]\]\n$/)
+    Culerity::CelerityServer.new(_in, _out)
+  end
 end
