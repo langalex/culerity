@@ -55,7 +55,11 @@ module Culerity
       if res.first == :return
         res[1]
       elsif res.first == :exception
-        raise CulerityException.new("#{res[1]}: #{res[2]}", res[3])
+        begin
+          raise "local trace"
+        rescue => ex
+          raise CulerityException.new("#{res[1]}: #{res[2]}", res[3] + ex.backtrace)
+        end
       end
     end
 
