@@ -4,3 +4,4 @@ pkg
 tmp
 *.sw?
 *.gem
+.rvmrc
