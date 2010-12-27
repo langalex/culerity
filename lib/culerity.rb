@@ -41,6 +41,7 @@ module Culerity
   end
   
   def self.run_server
+    ENV['RUBYOPT'] = ''
     IO.popen(%{#{jruby_invocation} "#{celerity_invocation}"}, 'r+').extend(ServerCommands)
   end
   

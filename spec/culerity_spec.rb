@@ -108,5 +108,14 @@ describe Culerity do
       Culerity.jruby_invocation = "rvm jruby@culerity ruby"
       Culerity.run_server
     end
+
+    it "should empty the RUBYOPT environment variable" do
+      Culerity.stub!(:celerity_invocation).and_return('/path/to/start_celerity.rb')
+      
+      ENV['RUBYOPT'] = "-I/usr/local/lib/ruby/gems/1.8/gems/bundler-1.0.7/lib -rbundler/setup"
+      Culerity.run_server
+
+      ENV['RUBYOPT'].should eql ""
+    end
   end
 end
