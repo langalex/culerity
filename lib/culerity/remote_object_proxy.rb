@@ -25,6 +25,10 @@ module Culerity
       send_remote(:inspect)
     end
     
+    def respond_to?(name)
+      send_remote :respond_to?, name
+    end
+    
     def method_missing(name, *args, &block)
       send_remote(name, *args, &block)
     end

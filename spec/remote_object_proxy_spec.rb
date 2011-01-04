@@ -49,6 +49,13 @@ describe Culerity::RemoteObjectProxy do
     proxy.inspect.should == "inspect output"
   end
   
+  it "should send respond_to? as a serialized method call to the output" do
+    io = stub 'io', :gets => '[:return, true]'
+    io.should_receive(:<<).with(%Q{[[345, "respond_to?", :xyz]]\n})
+    proxy = Culerity::RemoteObjectProxy.new 345, io
+    proxy.respond_to?(:xyz).should == true
+  end
+  
   it "should send the serialized method call with a proc argument to the output" do
     io = stub 'io', :gets => "[:return]"
     io.should_receive(:<<).with(%Q{[[345, "method", true, lambda { true }]]\n})
