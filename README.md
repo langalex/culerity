@@ -48,6 +48,10 @@ When you have finished running culerity/cucumber you can turn off the Rails inst
 NOTE: The default port for this server is 3001. You can change this in features/step_definitions/common_celerity.rb
 
     rake culerity:rails:stop
+    
+### RVM
+
+If you are using RVM there's an [integration guide for culerity](http://rvm.beginrescueend.com/integration/culerity/) on their website.
 
 ## How does it work
 
