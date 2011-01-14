@@ -21,7 +21,7 @@ end
 
 at_exit do
   $browser.exit if $browser
-  $server.close if $server
+  $server.exit_server if $server
   Process.kill(6, $rails_server_pid) if $rails_server_pid
 end
 
